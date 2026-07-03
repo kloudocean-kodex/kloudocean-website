@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTEQ to BigQuery: The Conversion Patterns That Actually Break | KloudOcean</title>
+<meta name="description" content="Sentinel dates, BYTES-to-BIGNUMERIC casting, partition limits, and the other BTEQ patterns that don't survive contact with BigQuery SQL.">
+<link rel="canonical" href="https://thekloudocean.com/blog/bteq-to-bigquery-conversion-patterns.html">
+<meta name="theme-color" content="#0D1B2A">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BTEQ to BigQuery: The Conversion Patterns That Actually Break">
+<meta property="og:description" content="Sentinel dates, casting, and partition limits — the BTEQ patterns that don't survive contact with BigQuery SQL.">
+<meta property="og:url" content="https://thekloudocean.com/blog/bteq-to-bigquery-conversion-patterns.html">
+<meta property="og:image" content="https://thekloudocean.com/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "BTEQ to BigQuery: The Conversion Patterns That Actually Break",
+  "author": { "@type": "Organization", "name": "KloudOcean" },
+  "publisher": { "@type": "Organization", "name": "KloudOcean" },
+  "datePublished": "2026-07-02",
+  "mainEntityOfPage": "https://thekloudocean.com/blog/bteq-to-bigquery-conversion-patterns.html"
+}
+</script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#31D6C8" stroke-width="1.4"/><path d="M6 18c3-4 6 4 10 0s7-4 10 0" stroke="#C9A24B" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+      KloudOcean
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <div class="nav-links">
+      <a href="/#services">Services</a>
+      <a href="/#pricing">Quick Start</a>
+      <a href="/#process">Process</a>
+      <a href="/#case-studies">Case Studies</a>
+      <a href="/about.html">About</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/resources.html">Free Tools</a>
+      <a href="/#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="/#contact" class="btn btn-secondary">Get in Touch</a>
+      <a href="https://calendly.com/rajputrupali138/30min" class="btn btn-primary" data-track="calendly">Book Free Call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <a href="/blog.html" class="back-link">← All posts</a>
+    <div class="eyebrow">Technical</div>
+    <h1 style="font-size:clamp(1.9rem,3.8vw,2.9rem); max-width:780px;">BTEQ to BigQuery: The Conversion Patterns That Actually Break</h1>
+  </div>
+</header>
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div class="post-body">
+      <p>Automated BTEQ-to-BigQuery converters handle the obvious 80% fine — SELECT statements, basic joins, standard data types. The failures cluster around a small set of patterns that show up in almost every legacy Teradata environment. Here's what to check for before you trust a converted script.</p>
+
+      <h2>Sentinel dates</h2>
+      <p>Teradata environments frequently use sentinel values — <code>9999-12-31</code> for "still active," <code>1900-01-01</code> for "unknown" — baked into date logic across years of BTEQ scripts. BigQuery's date functions don't inherently understand these as special cases; they're just dates. If your conversion doesn't explicitly preserve and handle sentinel logic in the converted SQL (or in a pre-processing step), you'll get technically-correct queries that silently return wrong business results — rows that should be "currently active" dropping out of date-range filters, or vice versa.</p>
+
+      <h2>Implicit casting, especially BYTES to numeric</h2>
+      <p>Teradata is more permissive about implicit type conversion than BigQuery. The one that causes the most damage: BYTES fields that get implicitly cast where BigQuery requires an explicit cast to <code>BIGNUMERIC</code>. Left unhandled, this doesn't always throw an error — sometimes it truncates precision silently, which is far worse than a failed query, because it passes validation that only checks for successful execution rather than correct values.</p>
+
+      <h2>Multi-statement transaction blocks</h2>
+      <p>BTEQ supports transaction patterns — multiple DML statements wrapped in explicit <code>BT</code>/<code>ET</code> blocks with specific rollback behavior — that don't map one-to-one onto BigQuery's transaction model. Scripts that lean on Teradata's transaction semantics for correctness (rather than just performance) need to be redesigned, not translated line-by-line.</p>
+
+      <h2>The 4,000-partition DML limit</h2>
+      <p>BigQuery enforces a limit on the number of partitions a single DML statement can affect. Large historical backfills that would run as one script in Teradata will hit this ceiling in BigQuery and need to be chunked — by date range or batch — with checkpoint and resume logic so a failure partway through doesn't force a full restart. This is a scripting and orchestration problem, not just a query problem, and it's easy to miss until you're migrating a table with years of history.</p>
+
+      <h2>Character encoding in shell-wrapped scripts</h2>
+      <p>BTEQ jobs are often triggered from shell scripts that have quietly accumulated encoding quirks over years — an em dash or curly quote pasted into a comment or literal years ago, sitting fine in the old environment's encoding, breaking the moment it runs through a UTF-8-strict pipeline. These failures are frustrating specifically because they're invisible in the source and only surface at runtime, usually with an unhelpful error.</p>
+
+      <h2>Macros calling macros</h2>
+      <p>Nested BTEQ macros with parameters passed down two or three levels are common in older environments and rarely documented anywhere except the code itself. Automated converters handle single-level macros reasonably well; nested macro chains usually need a human to trace the actual logic before conversion, not just a syntax translation.</p>
+
+      <h2>The pattern underneath all of these</h2>
+      <p>Every one of these failure modes shares the same root cause: BTEQ and BigQuery SQL look similar enough that a syntax-level converter produces something that <em>runs</em>. Whether it runs <em>correctly</em> is a separate question — and the gap between those two is exactly where migration budgets and timelines go wrong. Automated conversion is a legitimate first pass. It is not a substitute for someone who has personally chased down a sentinel-date bug in production and knows to look for the next one.</p>
+
+      <div class="post-cta">
+        <h3 style="margin-bottom:0.5rem;">Inheriting a BTEQ-heavy environment?</h3>
+        <p style="margin-bottom:var(--space-3);">A Migration Assessment flags exactly which of these patterns exist in your scripts before conversion starts — not after something breaks in production.</p>
+        <a href="/#pricing" class="btn btn-primary">See the Migration Assessment</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 KloudOcean IT Services and Solutions Pvt Ltd. All rights reserved.</span>
+      <span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919822529779" class="wa-float" aria-label="Chat on WhatsApp" data-track="whatsapp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.1a8.08 8.08 0 0 1-4.13-1.13l-.3-.18-3.06.8.82-2.98-.2-.31A8.1 8.1 0 1 1 12 20.1zm4.4-6.05c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.92-1.18-.7-.63-1.18-1.4-1.32-1.64-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28z"/></svg>
+</a>
+
+<script src="../script.js"></script>
+</body>
+</html>
