@@ -191,7 +191,7 @@ ORDER BY DatabaseName, TableName;
 
 -- ============================================================================
 -- Next step: run the free Migration Cost Estimator with your real numbers
--- from queries 2, 3, and 6 → thekloudocean.com/resources.html#estimator
+-- from queries 2, 3, and 6 → thekloudocean.com/resources#estimator
 -- Or book a paid assessment and we'll run the full pack for you, validated
 -- against your specific Teradata release → thekloudocean.com/#pricing
 -- ============================================================================
