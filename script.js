@@ -63,16 +63,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const track = (name, params) => {
     if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
   };
+  const trackLeadEvent = (name, params) => {
+    const eventParams = params || {};
+    track(name, eventParams);
+
+    if (name === 'calendly_click') {
+      track('qualify_lead', { ...eventParams, lead_source: 'calendly' });
+    }
+    if (name === 'form_submit_assessment') {
+      track('qualify_lead', { ...eventParams, form_name: 'assessment' });
+      track('generate_lead', { ...eventParams, form_name: 'assessment' });
+    }
+    if (name === 'miko_waitlist_submit') {
+      track('generate_lead', { ...eventParams, form_name: 'miko_waitlist' });
+    }
+    if (name === 'resource_unlock') {
+      track('generate_lead', { ...eventParams, form_name: 'resource_unlock' });
+    }
+    if (name === 'whatsapp_click' || name === 'email_click') {
+      track('contact', {
+        ...eventParams,
+        contact_method: name.replace('_click', '')
+      });
+    }
+  };
   document.querySelectorAll('[data-track]').forEach(el => {
     if (el.tagName === 'FORM') return; // forms handled separately below
-    el.addEventListener('click', () => track(el.dataset.track + '_click', { link_text: el.textContent.trim() }));
+    el.addEventListener('click', () => trackLeadEvent(el.dataset.track + '_click', { link_text: el.textContent.trim() }));
   });
   const assessForm = document.querySelector('#assessment-form');
-  if (assessForm) assessForm.addEventListener('submit', () => track('form_submit_assessment', {}));
+  if (assessForm) assessForm.addEventListener('submit', () => trackLeadEvent('form_submit_assessment', {}));
   const mikoForm = document.querySelector('#miko-waitlist-form');
-  if (mikoForm) mikoForm.addEventListener('submit', () => track('miko_waitlist_submit', {}));
+  if (mikoForm) mikoForm.addEventListener('submit', () => trackLeadEvent('miko_waitlist_submit', {}));
   document.querySelectorAll('.gate-form').forEach(form =>
-    form.addEventListener('submit', () => track('resource_unlock', { resource: form.dataset.resource || 'unknown' })));
+    form.addEventListener('submit', () => trackLeadEvent('resource_unlock', { resource: form.dataset.resource || 'unknown' })));
 
   /* ---- Migration Cost Estimator (resources.html only) ----
      Everything here is an educational estimate, not a quote — the copy
