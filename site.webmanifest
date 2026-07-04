@@ -1,0 +1,21 @@
+{
+  "name": "KloudOcean",
+  "short_name": "KloudOcean",
+  "description": "Cloud data migration and governance consulting.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1B2A",
+  "theme_color": "#0D1B2A",
+  "icons": [
+    {
+      "src": "/assets/brand/kloudocean-logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/brand/kloudocean-logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

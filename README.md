@@ -1,100 +1,121 @@
 # KloudOcean Website
 
-Company-first voice throughout — no personal name or bio anywhere on the site.
-Rupali Rajput (Director) is the one named human face, matching the branding
-decision to keep KloudOcean independent of any one individual.
+Static website for KloudOcean IT Services and Solutions Pvt Ltd.
 
-## What changed in this pass
+Live site: https://thekloudocean.com
+Repo: https://github.com/kloudocean-kodex/kloudocean-website
+Netlify project: `astounding-cheesecake-e46f8d`
 
-- **Icon system** — every service card, "why" reason, case study, and free
-  tool now has a purpose-built inline SVG icon in the brand's stroke style
-  (cyan line, brass accent). No external images, no icon font, nothing to
-  load or break.
-- **Hero route chart** relabeled from generic LEGACY/VALIDATE/TRANSFORM/CLOUD
-  to specific TERADATA/HDFS → ASSESS → CONVERT → BIGQUERY — matches the
-  OG image and LinkedIn banner for one consistent visual signature.
-- **The KloudOcean Passage Method** — the five-stage process now has an
-  actual name, referenced on the homepage and About page.
-- **New `resources.html`** — interactive Migration Cost Estimator (pure
-  JS, no backend) plus four downloadable lead magnets.
-- **Four real downloadable files** in `/downloads/` — not placeholders:
-  - `kloudocean-migration-readiness-checklist.pdf` — free, no email gate
-  - `kloudocean-teradata-bigquery-sql-cheatsheet.pdf` — 25 patterns, email-gated
-  - `kloudocean-teradata-inventory-query-pack.sql` — 13 real DBC queries, email-gated
-  - `kloudocean-data-governance-template-pack.xlsx` — 4-sheet workbook, email-gated
-- **Two new blog posts** (governance, readiness checklist) — blog now has 4.
-- **Tech stack** regrouped into 6 labeled categories instead of one flat pill cloud.
-- **`about.html`** fully rewritten — company voice, Rupali named as Director,
-  a generic "delivery bench" card instead of a second named individual, the
-  Passage Method explained, KODE-X mentioned.
-- **`og-image.jpg`** and **`assets/social/linkedin-banner.jpg`** generated —
-  both use the same route-chart visual signature. Upload the banner directly
-  to the LinkedIn company page; the OG image is already wired into every
-  page's meta tags.
-- **Consistency fixes**: WhatsApp float button and full nav now present on
-  *every* page (previously missing on blog.html, both blog posts, privacy,
-  terms). Contact email standardized to `info@thekloudocean.com` everywhere
-  (Privacy/Terms previously said `hello@thekloudocean.com`).
+Master brand tagline: "Enterprise data oceans, governed on cloud platforms."
+Secondary descriptor: "Cloud Migration | Data Governance | Multi-Cloud Strategy."
 
-## Before you deploy — verify these
+## Current State
 
-| Item | Status | Action needed |
-|---|---|---|
-| WhatsApp number (`919822529779`) | ✅ Already correct everywhere | None, unless the number changes |
-| Formspree ID (`mqeoozan`) | ✅ Already wired, and now reused for the 4 new lead-magnet forms | See note below |
-| Contact email | ✅ Standardized to `info@thekloudocean.com` | Confirm this inbox is actually monitored |
-| LinkedIn footer link | Points to `linkedin.com/company/kloudocean` | Confirm the page is live, or it 404s |
-| GA4 | Tracking hooks are ready in `script.js` (`data-track="..."` fires automatically) | Drop your `gtag.js` snippet in each page's `<head>` — no other code changes needed |
+- GitHub to Netlify CI/CD deploys from `main`.
+- Primary domain is `thekloudocean.com`.
+- `www.thekloudocean.com`, `kloudocean.co.in`, `www.kloudocean.co.in`, and the Netlify production subdomain redirect to the canonical domain.
+- GA4 measurement ID `G-G5VW1T18RX` is installed with consent mode.
+- Lead tracking emits `qualify_lead`, `generate_lead`, and `contact` events in addition to detailed custom events.
+- Search Console sitemap is submitted at `https://thekloudocean.com/sitemap.xml`.
+- IndexNow key file is live at `/a0f8f0c4f3f7427ab33ffdfddfa28717.txt`.
 
-**On reusing one Formspree form for everything:** the 4 new resource-unlock
-forms on `resources.html` all POST to the same `mqeoozan` endpoint as the
-assessment and MIKO waitlist forms, distinguished by a hidden `resource`
-field. This works immediately with zero setup. If you want cleaner
-separation in your Formspree dashboard later, create dedicated forms per
-resource and swap the `action` URLs — everything else stays the same.
+## Site Structure
 
-**Blog post dates:** the two new posts are dated today in their schema
-markup. If you're not publishing all four at once, stagger the actual
-`datePublished` values in the `<script type="application/ld+json">` block
-near the top of each post to match when you really post them — a steady
-weekly cadence reads better to Google than four posts on one day.
+```text
+index.html
+about.html
+resources.html
+blog.html
+privacy.html
+terms.html
+404.html
 
-**One judgment call, flagged directly:** `about.html` names Rupali Rajput as
-Director with initials "RR" as a placeholder avatar. Confirm the spelling of
-her full name is correct — it was inferred from the Calendly username
-(`rajputrupali138`) and hasn't been explicitly confirmed elsewhere.
+services/
+  teradata-to-bigquery-migration.html
+  hdfs-to-bigquery-migration.html
+  data-governance-consulting.html
+  bigquery-cost-optimization.html
+  fractional-data-architect.html
+  analytics-dashboard-modernization.html
 
-## Structure
-
-```
-index.html              Homepage — services, pricing, case studies, process, free tools teaser, FAQ
-about.html               Company story, Passage Method, Rupali + delivery bench
-resources.html            Cost Estimator + all 4 downloads
-blog.html                 Blog index (4 posts)
 blog/
   teradata-bigquery-migration-cost-guide.html
   bteq-to-bigquery-conversion-patterns.html
-  data-governance-after-migration.html          (new)
-  migration-readiness-checklist.html             (new)
-privacy.html              Privacy Policy
-terms.html                 Terms of Service
+  data-governance-after-migration.html
+  migration-readiness-checklist.html
+
 downloads/
-  kloudocean-migration-readiness-checklist.pdf   (new, free)
-  kloudocean-teradata-bigquery-sql-cheatsheet.pdf (new, gated)
-  kloudocean-teradata-inventory-query-pack.sql    (new, gated)
-  kloudocean-data-governance-template-pack.xlsx   (new, gated)
+  kloudocean-migration-readiness-checklist.pdf
+  kloudocean-teradata-bigquery-sql-cheatsheet.pdf
+  kloudocean-teradata-inventory-query-pack.sql
+  kloudocean-data-governance-template-pack.xlsx
+
+assets/og/
+  cloud-data-migration-governance.jpg
+
+assets/brand/
+  kloudocean-logo-180.png
+  kloudocean-logo-192.png
+  kloudocean-logo-512.png
+
 assets/social/
-  linkedin-banner.jpg      (new — 1584×396, upload to LinkedIn company page)
-og-image.jpg               (new — 1200×630, wired into meta tags already)
-styles.css                 Shared design system + icon system + estimator styles
-script.js                  Mobile nav, GA4 hooks, estimator logic — zero dependencies
+  linkedin-banner.jpg
+  linkedin-page-cover-4200x700.jpg
+
+styles.css
+script.js
 favicon.svg
+site.webmanifest
 robots.txt
-sitemap.xml                 Updated with all new pages
-netlify.toml                 Clean URLs + security headers + downloads Content-Disposition
+sitemap.xml
+netlify.toml
 ```
 
-Adding a new page later: copy any existing page, keep the nav/footer/WhatsApp
-float blocks as-is (they're identical across every page on purpose), edit
-the content inside `<div class="prose">` or `<div class="post-body">`, and
-add one entry to `sitemap.xml`.
+## Implemented SEO And Conversion Work
+
+- Clean URLs for main pages, blog posts, and service pages.
+- `.html` URLs 301 redirect to clean URLs.
+- Six dedicated service landing pages with `Service`, `FAQPage`, and breadcrumb structured data.
+- Homepage `Organization` / `ProfessionalService` structured data.
+- FAQ schema on the homepage.
+- Branded custom 404 page.
+- Sitemap with `lastmod` dates and 16 indexable URLs.
+- Shared social preview image: `assets/og/cloud-data-migration-governance.jpg`.
+- `og:image`, `twitter:image`, dimensions, and image alt text on indexable pages.
+- Dedicated brand logo images for Organization schema, app/touch icons, and manifest usage.
+- Split wordmark styling: "Kloud" uses cloud-white and "Ocean" uses ocean-cyan for the public site and social assets.
+- Cookie consent banner and Google consent mode defaults.
+- Security headers and CSP in `netlify.toml`.
+- Static asset cache headers.
+- Full footer and contact consistency across pages.
+- Scroll reveal, reading progress bar, card hover polish, and founder/proof-point sections.
+
+## Pending Trust Assets
+
+- Replace founder initials with real approved headshots.
+- Add real testimonials only after explicit client permission.
+- Add partner badges only after verification. Do not claim Google Cloud Partner status unless KloudOcean is officially listed or approved.
+- In GA UI, mark `qualify_lead`, `generate_lead`, and `contact` as key events after events appear.
+- Continue content growth with more service-linked blog posts and real case-study proof.
+
+## Operational Notes
+
+- Contact email on the public site is `info@thekloudocean.com`.
+- Netlify, Cloudflare, Search Console, and Analytics access should stay under the owner/admin account; do not put private login emails into public site copy.
+- Formspree endpoint `mqeoozan` is reused for assessment, MIKO waitlist, and resource forms. Hidden fields distinguish intent/resource.
+- The LinkedIn footer link points to `https://www.linkedin.com/company/kloudocean`; verify the company page stays live.
+- Use `favicon.svg` for browser tab favicon, `assets/brand/kloudocean-logo-512.png` for structured data, `assets/og/cloud-data-migration-governance.jpg` for social link previews, `assets/social/linkedin-page-cover-4200x700.jpg` for the LinkedIn company Page cover, and `assets/social/linkedin-banner.jpg` for profile-style banner contexts.
+- Keep the master tagline consistent across public brand surfaces. Service pages can be specific, but brand banners and social previews should not narrow the company to only one migration path.
+
+## Editing Notes
+
+- Keep public URLs clean and update `sitemap.xml` for new indexable pages.
+- Keep canonical URLs aligned with clean URLs.
+- Keep real claims conservative: no fake clients, badges, certifications, testimonials, or partner status.
+- Run before pushing:
+
+```powershell
+node --check script.js
+netlify.cmd build --dry
+git diff --check
+```

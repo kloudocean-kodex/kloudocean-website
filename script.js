@@ -1,6 +1,6 @@
-// KloudOcean — shared site behaviour
+// KloudOcean - shared site behaviour
 // Principle: every element must be correct with zero JS. Scripts here only
-// add motion on top of already-correct HTML — nothing depends on JS to
+// add motion on top of already-correct HTML - nothing depends on JS to
 // display the right value (this fixes the old "counters show 0" bug).
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,26 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
     toggle.addEventListener('click', () => {
       const isOpen = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', String(isOpen));
-      toggle.textContent = isOpen ? '✕' : '☰';
+      toggle.textContent = isOpen ? '\u00d7' : '\u2630';
     });
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
       links.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.textContent = '☰';
+      toggle.textContent = '\u2630';
     }));
   }
 
   /* ---- Cookie Consent ----
-     GA4 fires ONLY after the user has explicitly accepted cookies.
-     If consent has already been given (stored in localStorage), GA4
-     initializes immediately on page load. */
+     Google consent mode defaults to denied in the page head. This updates
+     analytics storage only after the visitor accepts measurement cookies. */
   const consentBanner = document.querySelector('.cookie-banner');
   const hasConsent = localStorage.getItem('ko_cookie_consent');
 
   function initGA4() {
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
-        'analytics_storage': 'granted'
+        'analytics_storage': 'granted',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
       });
     }
   }
@@ -39,7 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function blockGA4() {
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
-        'analytics_storage': 'denied'
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
       });
     }
   }
@@ -199,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', () => trackLeadEvent('resource_unlock', { resource: form.dataset.resource || 'unknown' })));
 
   /* ---- Migration Cost Estimator (resources.html only) ----
-     Everything here is an educational estimate, not a quote — the copy
+     Everything here is an educational estimate, not a quote - the copy
      around this widget says so, and the numbers are deliberately
      conservative-to-mid so it under-promises rather than over-promises. */
   const estimator = document.querySelector('#estimator-form');

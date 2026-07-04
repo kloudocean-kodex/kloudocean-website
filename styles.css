@@ -1,22 +1,22 @@
 /* ==========================================================================
    KLOUDOCEAN DESIGN SYSTEM
-   Concept: "Chart & Fathom" — the site reads like a nautical survey chart
+   Concept: "Chart & Fathom" - the site reads like a nautical survey chart
    crossed with a technical schematic. Migration = charting safe passage
    from a legacy harbour to open cloud waters. Numbered waypoints, route
    lines, and depth-contour texture carry that idea structurally, not
    decoratively.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
 :root {
   /* Color tokens */
-  --navy-deep: #0D1B2A;      /* primary background — matches existing brand */
+  --navy-deep: #0D1B2A;      /* primary background - matches existing brand */
   --navy-mid: #16324A;        /* card / raised surface */
   --navy-line: #22415C;       /* borders, depth-contour lines */
-  --cyan: #31D6C8;            /* signal accent — data / tech */
+  --cloud-white: #F8FBFF;     /* KLOUD wordmark color */
+  --cyan: #31D6C8;            /* signal accent - data / tech */
+  --ocean-cyan: #31D6C8;      /* OCEAN wordmark color */
   --cyan-dim: #1B8F85;
-  --brass: #C9A24B;           /* nautical brass — the one deliberate risk accent */
+  --brass: #C9A24B;           /* nautical brass - the one deliberate risk accent */
   --brass-bright: #E0BE73;
   --ink: #EDF2F7;             /* primary text */
   --ink-dim: #9FB3C8;         /* secondary text */
@@ -180,6 +180,13 @@ em { font-style: italic; color: var(--cyan); }
   width: 30px; height: 30px;
   flex-shrink: 0;
 }
+.brand-word {
+  display: inline-flex;
+  align-items: baseline;
+  letter-spacing: 0;
+}
+.brand-kloud { color: var(--cloud-white); }
+.brand-ocean { color: var(--ocean-cyan); }
 .nav-links { display: flex; align-items: center; gap: var(--space-4); }
 .nav-links a:not(.btn) {
   font-size: 0.92rem; color: var(--ink-dim);
@@ -215,7 +222,7 @@ em { font-style: italic; color: var(--cyan); }
 .hero-actions { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-5); }
 .hero-locales { display: flex; gap: 1.4rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-faint); }
 
-/* Route chart — signature element */
+/* Route chart - signature element */
 .route-chart { margin-top: var(--space-6); }
 .route-svg { width: 100%; height: auto; }
 .route-path {
@@ -298,7 +305,7 @@ em { font-style: italic; color: var(--cyan); }
 .price-amount span { font-size: 0.95rem; color: var(--ink-faint); font-weight: 400; }
 .price-features { flex: 1; margin: var(--space-3) 0; }
 .price-features li { font-size: 0.88rem; color: var(--ink-dim); padding: 0.4rem 0; padding-left: 1.4rem; position: relative; }
-.price-features li::before { content: '✓'; position: absolute; left: 0; color: var(--cyan); font-weight: 600; }
+.price-features li::before { content: '\2713'; position: absolute; left: 0; color: var(--cyan); font-weight: 600; }
 
 /* Case studies */
 .case-card { padding: var(--space-4); }
@@ -407,7 +414,7 @@ footer { border-top: 1px solid var(--navy-line); padding: var(--space-6) 0 var(-
 .cta-band p { max-width: 480px; margin: 0 auto var(--space-4); }
 
 /* ==========================================================================
-   ICON SYSTEM — one stroke language used everywhere: 1.5px cyan line,
+   ICON SYSTEM - one stroke language used everywhere: 1.5px cyan line,
    brass for the single accent stroke inside each mark. No two icons share
    a silhouette, so the service grid reads at a glance before anyone
    reads a word of copy.
@@ -420,7 +427,7 @@ footer { border-top: 1px solid var(--navy-line); padding: var(--space-6) 0 var(-
 .icon-mark svg { width: 100%; height: 100%; }
 .card .icon-mark { margin-bottom: 1rem; }
 
-/* Why-grid: icon replaces the arbitrary numeral — these four reasons
+/* Why-grid: icon replaces the arbitrary numeral - these four reasons
    aren't a sequence, so a mark that reflects the reason itself (helm,
    tag, stack, shield) carries more truth than 01/02/03/04 did. */
 .why-item { display: flex; gap: var(--space-3); align-items: flex-start; }
