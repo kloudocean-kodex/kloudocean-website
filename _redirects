@@ -1,17 +1,4 @@
-# Exclude static files and directories from rewriting
-/assets/* /assets/:splat 200!
-/downloads/* /downloads/:splat 200!
-/*.css /:splat 200!
-/*.js /:splat 200!
-/*.svg /:splat 200!
-/*.png /:splat 200!
-/*.jpg /:splat 200!
-/*.webmanifest /:splat 200!
-/sitemap.xml /sitemap.xml 200!
-/robots.txt /robots.txt 200!
-/favicon.svg /favicon.svg 200!
-
-# Clean URL rewrites (serve .html files at clean URLs)
+# Cloudflare Pages routing - clean URLs only (no static file exclusions needed)
 /privacy /privacy.html 200
 /terms /terms.html 200
 /about /about.html 200
@@ -27,6 +14,4 @@
 /services/bigquery-cost-optimization /services/bigquery-cost-optimization.html 200
 /services/fractional-data-architect /services/fractional-data-architect.html 200
 /services/analytics-dashboard-modernization /services/analytics-dashboard-modernization.html 200
-
-# 404 fallback
 /* /404.html 404
