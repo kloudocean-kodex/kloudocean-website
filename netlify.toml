@@ -15,6 +15,34 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://formspree.io https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://cloudflareinsights.com https://*.cloudflareinsights.com; form-action 'self' https://formspree.io; frame-src https://calendly.com https://challenges.cloudflare.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
 
+# ---- Static asset cache headers ----
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/downloads/*"
+  [headers.values]
+    Content-Disposition = "attachment"
+    Cache-Control = "public, max-age=3600"
+
+# ---- .html → clean URL redirects (301) ----
 [[redirects]]
   from = "/privacy.html"
   to = "/privacy"
@@ -45,6 +73,7 @@
   status = 301
   force = true
 
+# ---- Clean URL rewrites (200) ----
 [[redirects]]
   from = "/privacy"
   to = "/privacy.html"
@@ -70,8 +99,120 @@
   to = "/resources.html"
   status = 200
 
-[[headers]]
-  for = "/downloads/*"
-  [headers.values]
-    Content-Disposition = "attachment"
-    Cache-Control = "public, max-age=3600"
+# ---- Blog post clean URLs ----
+[[redirects]]
+  from = "/blog/teradata-bigquery-migration-cost-guide.html"
+  to = "/blog/teradata-bigquery-migration-cost-guide"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/bteq-to-bigquery-conversion-patterns.html"
+  to = "/blog/bteq-to-bigquery-conversion-patterns"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/data-governance-after-migration.html"
+  to = "/blog/data-governance-after-migration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/migration-readiness-checklist.html"
+  to = "/blog/migration-readiness-checklist"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/teradata-bigquery-migration-cost-guide"
+  to = "/blog/teradata-bigquery-migration-cost-guide.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/bteq-to-bigquery-conversion-patterns"
+  to = "/blog/bteq-to-bigquery-conversion-patterns.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/data-governance-after-migration"
+  to = "/blog/data-governance-after-migration.html"
+  status = 200
+
+[[redirects]]
+  from = "/blog/migration-readiness-checklist"
+  to = "/blog/migration-readiness-checklist.html"
+  status = 200
+
+# ---- Service page clean URLs ----
+[[redirects]]
+  from = "/services/teradata-to-bigquery-migration.html"
+  to = "/services/teradata-to-bigquery-migration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/hdfs-to-bigquery-migration.html"
+  to = "/services/hdfs-to-bigquery-migration"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/data-governance-consulting.html"
+  to = "/services/data-governance-consulting"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/bigquery-cost-optimization.html"
+  to = "/services/bigquery-cost-optimization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/fractional-data-architect.html"
+  to = "/services/fractional-data-architect"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/analytics-dashboard-modernization.html"
+  to = "/services/analytics-dashboard-modernization"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/teradata-to-bigquery-migration"
+  to = "/services/teradata-to-bigquery-migration.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/hdfs-to-bigquery-migration"
+  to = "/services/hdfs-to-bigquery-migration.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/data-governance-consulting"
+  to = "/services/data-governance-consulting.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/bigquery-cost-optimization"
+  to = "/services/bigquery-cost-optimization.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/fractional-data-architect"
+  to = "/services/fractional-data-architect.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/analytics-dashboard-modernization"
+  to = "/services/analytics-dashboard-modernization.html"
+  status = 200
+
+# ---- Custom 404 ----
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

@@ -21,6 +21,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
   }
 
+  /* ---- Cookie Consent ----
+     GA4 fires ONLY after the user has explicitly accepted cookies.
+     If consent has already been given (stored in localStorage), GA4
+     initializes immediately on page load. */
+  const consentBanner = document.querySelector('.cookie-banner');
+  const hasConsent = localStorage.getItem('ko_cookie_consent');
+
+  function initGA4() {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
+    }
+  }
+
+  function blockGA4() {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'denied'
+      });
+    }
+  }
+
+  if (hasConsent === 'accepted') {
+    initGA4();
+  } else if (hasConsent === 'declined') {
+    blockGA4();
+  } else if (consentBanner) {
+    // Show cookie banner after a brief delay
+    setTimeout(() => consentBanner.classList.add('show'), 800);
+  }
+
+  if (consentBanner) {
+    const acceptBtn = consentBanner.querySelector('[data-consent="accept"]');
+    const declineBtn = consentBanner.querySelector('[data-consent="decline"]');
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('ko_cookie_consent', 'accepted');
+        consentBanner.classList.remove('show');
+        initGA4();
+      });
+    }
+    if (declineBtn) {
+      declineBtn.addEventListener('click', () => {
+        localStorage.setItem('ko_cookie_consent', 'declined');
+        consentBanner.classList.remove('show');
+        blockGA4();
+      });
+    }
+  }
+
   /* ---- Stat counters ----
      HTML already contains the real, correct final text (e.g. "1,000+").
      If the browser respects prefers-reduced-motion, or IntersectionObserver
@@ -57,6 +109,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.4 });
 
     stats.forEach(el => observer.observe(el));
+  }
+
+  /* ---- Scroll-Reveal Animations ----
+     Fade-in-up effect for all .reveal elements as they enter the viewport.
+     Also handles staggered grid children (.reveal-stagger). */
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    // Single-element reveals
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => revealObserver.observe(el));
+
+    // Staggered grid children
+    const staggerContainers = document.querySelectorAll('.reveal-stagger');
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const children = entry.target.querySelectorAll('.card, .why-item, .waypoint');
+          children.forEach((child, i) => {
+            setTimeout(() => child.classList.add('visible'), i * 100);
+          });
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    staggerContainers.forEach(el => staggerObserver.observe(el));
+  }
+
+  /* ---- Reading Progress Bar ----
+     Fixed bar at top of page that fills as user scrolls through blog posts. */
+  const progressBar = document.querySelector('.reading-progress');
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = Math.min(progress, 100) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
   }
 
   /* ---- GA4 event hooks (safe no-ops if gtag isn't present yet) ---- */

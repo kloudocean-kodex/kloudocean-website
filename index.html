@@ -49,11 +49,12 @@
   ]
 }
 </script>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) — consent mode: GA4 defaults to denied until user accepts cookies -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G5VW1T18RX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { 'analytics_storage': 'denied' });
   gtag('js', new Date());
   gtag('config', 'G-G5VW1T18RX');
 </script>
@@ -94,6 +95,7 @@
       <div class="eyebrow">Now Accepting Engagements</div>
       <h1>Your Data. Migrated Right.</h1>
       <p class="lede">Senior BigQuery &amp; data engineering specialists for growing businesses. We move legacy Teradata, HDFS, Hive, Oracle, and Netezza systems to the cloud — without hiring a full internal data team. Fixed-price engagements available.</p>
+      <p class="lede" style="font-size:1rem; color:var(--ink-faint); margin-top:-0.5rem; margin-bottom:var(--space-3);">Enterprise-grade analytics for companies of every size. Founder-led delivery. No procurement maze.</p>
       <div class="hero-actions">
         <a href="/#contact" class="btn btn-primary">Request Free Assessment</a>
         <a href="https://calendly.com/rajputrupali138/30min" class="btn btn-secondary" data-track="calendly">Book a Strategy Call →</a>
@@ -124,12 +126,12 @@
 
 <section class="section" id="services">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Services</div>
       <h2>Six ways we get your data where it needs to be</h2>
       <p>From a single cost review to a full enterprise migration — scoped to what you actually need.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3 reveal-stagger">
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5">
@@ -142,6 +144,7 @@
         <h3>Teradata to BigQuery Migration</h3>
         <p>End-to-end migration of Teradata workloads — schema conversion, BTEQ script translation, validation, and cutover — with zero-downtime patterns for production systems.</p>
         <div class="tag-row"><span class="tag">BTEQ</span><span class="tag">Schema Conversion</span><span class="tag">Validation</span></div>
+        <a href="/services/teradata-to-bigquery-migration" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
@@ -154,6 +157,7 @@
         <h3>HDFS &amp; Hive to BigQuery</h3>
         <p>Migrate Hadoop-ecosystem data platforms — HDFS, Hive, Spark jobs — into BigQuery with a re-architected, cloud-native pipeline instead of a lift-and-shift.</p>
         <div class="tag-row"><span class="tag">Hive</span><span class="tag">Spark</span><span class="tag">Dataproc</span></div>
+        <a href="/services/hdfs-to-bigquery-migration" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
@@ -165,6 +169,7 @@
         <h3>Data Governance &amp; Cataloging</h3>
         <p>Metadata management, lineage, and access-control implementations using Dataplex, Alation, or DataHub — built for audit-readiness, not just documentation.</p>
         <div class="tag-row"><span class="tag">Dataplex</span><span class="tag">Alation</span><span class="tag">DataHub</span></div>
+        <a href="/services/data-governance-consulting" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
@@ -178,6 +183,7 @@
         <h3>BigQuery Cost &amp; Performance Optimization</h3>
         <p>Audit slot usage, partition strategy, and query patterns to cut your BigQuery bill — most engagements pay for themselves within one billing cycle.</p>
         <div class="tag-row"><span class="tag">Partitioning</span><span class="tag">Slot Reservations</span><span class="tag">FinOps</span></div>
+        <a href="/services/bigquery-cost-optimization" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
@@ -190,6 +196,7 @@
         <h3>Fractional Data Architect</h3>
         <p>Senior architecture guidance on retainer — for teams that need a data lead's judgment without a full-time hire. Reviews, roadmaps, and hands-on unblocking.</p>
         <div class="tag-row"><span class="tag">Architecture Review</span><span class="tag">Roadmapping</span><span class="tag">On-call</span></div>
+        <a href="/services/fractional-data-architect" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
       <div class="card">
         <div class="icon-mark" aria-hidden="true">
@@ -202,6 +209,7 @@
         <h3>Analytics &amp; Dashboard Modernization</h3>
         <p>Stand up or rebuild reporting on Looker Studio or Power BI, connected directly to your warehouse — no more exported spreadsheets.</p>
         <div class="tag-row"><span class="tag">Looker Studio</span><span class="tag">Power BI</span><span class="tag">GA4</span></div>
+        <a href="/services/analytics-dashboard-modernization" class="btn btn-secondary btn-block" style="margin-top:var(--space-4);">Explore Service</a>
       </div>
     </div>
   </div>
@@ -209,11 +217,11 @@
 
 <section class="section section-alt">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Why KloudOcean</div>
       <h2>What you're actually hiring</h2>
     </div>
-    <div class="grid grid-2">
+    <div class="grid grid-2 reveal-stagger">
       <div class="why-item">
         <div class="why-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5">
@@ -257,14 +265,76 @@
   </div>
 </section>
 
+<!-- ====== Meet the Founders ====== -->
+<section class="founders-section" id="founders">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Meet the Founders</div>
+      <h2>The people behind every engagement</h2>
+      <p>KloudOcean is founder-led — you work directly with the people who built this practice, not a rotating bench.</p>
+    </div>
+    <div class="founders-grid reveal">
+      <div class="founder-card">
+        <div class="founder-avatar">RR</div>
+        <div class="founder-info">
+          <h3>Rupali Rajput</h3>
+          <span class="founder-role">Director · Partnerships &amp; Client Relations</span>
+          <p>Runs client onboarding, partnerships, and operations. The first point of contact for anything from a quick question to a full engagement kickoff.</p>
+        </div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-avatar">GR</div>
+        <div class="founder-info">
+          <h3>Gawrav Rajput</h3>
+          <span class="founder-role">Co-Founder · Data Engineering &amp; Strategy</span>
+          <p>Leads technical strategy, migration architecture, and delivery. Brings enterprise-scale GCP data engineering experience from programs spanning 1,000+ TB.</p>
+        </div>
+      </div>
+    </div>
+    <div class="founders-tagline reveal">🏠 <strong>Family-owned. Founder-led.</strong> Every client works directly with the owners — no outsourcing, no rotating bench, no junior hand-off.</div>
+  </div>
+</section>
+
+<!-- ====== Trust Signals ====== -->
+<section class="trust-strip">
+  <div class="container">
+    <div class="trust-row reveal">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><path d="M12 2.7 4.3 5.8v5.4c0 5 3.1 8.6 7.7 9.7 4.6-1.1 7.7-4.7 7.7-9.7V5.8z"/><path d="M8.6 12.2l2.4 2.4 4.4-4.6" stroke="#C9A24B"/></svg>
+        <span class="trust-label">NDA-First Always</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><rect x="2.8" y="6.5" width="18.4" height="11" rx="1.4"/><path d="M2.8 9h18.4M8.4 9v8.5" stroke="#C9A24B"/><path d="M11.6 12.2h6M11.6 14.8h4"/></svg>
+        <span class="trust-label">Fixed-Price Delivery</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><circle cx="12" cy="12" r="9.3"/><path d="M12 7v5.5l3.5 2" stroke="#C9A24B"/></svg>
+        <span class="trust-label">10+ Years Combined</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><path d="M3 12h3l3-7 4 14 3-7h5"/></svg>
+        <span class="trust-label">1,000+ TB Migrated</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><circle cx="12" cy="12" r="9.3"/><path d="M2.7 12h18.6M12 2.7c-3 3.5-3 14.6 0 18.6m0-18.6c3 3.5 3 14.6 0 18.6" stroke="#C9A24B"/></svg>
+        <span class="trust-label">6 Countries Served</span>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5"><ellipse cx="12" cy="5" rx="7.6" ry="2.6"/><path d="M4.4 5v4.6c0 1.44 3.4 2.6 7.6 2.6s7.6-1.16 7.6-2.6V5"/><path d="M4.4 9.6v4.6c0 1.44 3.4 2.6 7.6 2.6s7.6-1.16 7.6-2.6V9.6" stroke="#C9A24B"/><path d="M4.4 14.2v4.6c0 1.44 3.4 2.6 7.6 2.6s7.6-1.16 7.6-2.6v-4.6"/></svg>
+        <span class="trust-label">Google Cloud Ecosystem</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="process">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Process</div>
       <h2>The <span class="method-name">KloudOcean Passage Method</span></h2>
       <p>A charted five-stage route every migration follows — so nothing gets improvised mid-voyage.</p>
     </div>
-    <div class="waypoints">
+    <div class="waypoints reveal-stagger">
       <div class="waypoint-line"></div>
       <div class="waypoint">
         <div class="waypoint-num">01</div>
@@ -292,12 +362,12 @@
 
 <section class="section section-alt" id="pricing">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Quick Start Packages</div>
       <h2>Clear scope, clear price</h2>
       <p>Start small and prove the value, or go straight to a full migration. No RFP required.</p>
     </div>
-    <div class="grid grid-4">
+    <div class="grid grid-4 reveal-stagger">
       <div class="card price-card">
         <h3>BigQuery Cost Review</h3>
         <div class="price-amount">$599<span>/ one-time</span></div>
@@ -360,12 +430,12 @@
 
 <section class="section" id="free-tools">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Free, Before You Hire Us</div>
       <h2>The stuff other firms charge for a scoping call to give you</h2>
       <p>No email required for the checklist. The rest take thirty seconds to unlock. Use them whether or not you ever talk to us.</p>
     </div>
-    <div class="grid grid-4">
+    <div class="grid grid-4 reveal-stagger">
       <div class="card tool-card">
         <div class="icon-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="#31D6C8" stroke-width="1.5">
@@ -424,7 +494,7 @@
 
 <section class="section section-alt">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Tech Stack</div>
       <h2>Tools we work in daily</h2>
     </div>
@@ -469,11 +539,11 @@
 
 <section class="section" id="case-studies">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Case Studies</div>
       <h2>Migrations we've actually run</h2>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-3 reveal-stagger">
       <div class="card case-card">
         <div class="case-meta">
           <svg viewBox="0 0 24 24" fill="none" stroke="#C9A24B" stroke-width="1.6" aria-hidden="true"><path d="M6.5 8.5h11l-1 11.5h-9z"/><path d="M9 8.5V6a3 3 0 0 1 6 0v2.5"/></svg>
@@ -511,13 +581,37 @@
   </div>
 </section>
 
+<!-- ====== Proof Points ====== -->
+<section class="section section-alt" id="proof-points">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Proof Points</div>
+      <h2>What a good engagement should prove quickly</h2>
+    </div>
+    <div class="testimonial-grid reveal-stagger">
+      <div class="testimonial-card card">
+        <p class="testimonial-quote">Scope should get clearer, not foggier. We surface charset, script, scheduler, lineage, and validation risks before they become change orders.</p>
+        <span class="testimonial-author">Assessment output</span>
+      </div>
+      <div class="testimonial-card card">
+        <p class="testimonial-quote">Dashboards should ship with clean event definitions, business-readable metrics, and enough documentation that your team can own them after handover.</p>
+        <span class="testimonial-author">Analytics delivery standard</span>
+      </div>
+      <div class="testimonial-card card">
+        <p class="testimonial-quote">Founder-led means the people who scope the work stay close to delivery. You get senior review, direct communication, and fewer hand-off gaps.</p>
+        <span class="testimonial-author">Delivery model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section section-alt" id="faq">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">FAQ</div>
       <h2>Before you ask</h2>
     </div>
-    <div style="max-width:780px;">
+    <div style="max-width:780px;" class="reveal">
       <details class="faq-item">
         <summary class="faq-q">Do you work with companies outside India? <span class="plus">+</span></summary>
         <p class="faq-a">Yes — we actively serve clients across India, Australia, the UAE, the USA, the UK, and Canada. All coordination happens over video calls and shared documentation, with overlap hours arranged around your time zone.</p>
@@ -552,7 +646,7 @@
 
 <section class="section" id="contact">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="eyebrow">Get in Touch</div>
       <h2>Tell us what you're migrating</h2>
       <p>Fill this in and you'll hear back within one business day — or skip straight to a call above.</p>
@@ -660,6 +754,81 @@
 <a href="https://wa.me/919822529779" class="wa-float" aria-label="Chat on WhatsApp" data-track="whatsapp">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.1a8.08 8.08 0 0 1-4.13-1.13l-.3-.18-3.06.8.82-2.98-.2-.31A8.1 8.1 0 1 1 12 20.1zm4.4-6.05c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.92-1.18-.7-.63-1.18-1.4-1.32-1.64-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28z"/></svg>
 </a>
+
+<!-- Cookie Consent Banner -->
+<div class="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies to understand how you use our site and improve your experience. See our <a href="/privacy">Privacy Policy</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="btn btn-secondary" data-consent="decline">Decline</button>
+    <button class="btn btn-primary" data-consent="accept">Accept</button>
+  </div>
+</div>
+
+<!-- FAQPage JSON-LD for Google Rich Results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you work with companies outside India?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — we actively serve clients across India, Australia, the UAE, the USA, the UK, and Canada. All coordination happens over video calls and shared documentation, with overlap hours arranged around your time zone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What data platforms do you migrate from and to?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Primarily Teradata, HDFS/Hive, Oracle, and Netezza as source systems, migrating into BigQuery (and Snowflake where that's the better fit). If your platform isn't listed, ask — the underlying migration patterns generalize well."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a typical migration project take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends entirely on scope — a focused departmental migration can close in 6-8 weeks, while a full enterprise platform spans several months. The Migration Assessment gives you a real timeline before you commit to anything."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the Free Assessment actually include?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A structured review of your current platform, a complexity and risk score, and a fixed-price proposal for the actual migration — no obligation to proceed, and no generic sales deck."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer fixed-price or time-and-materials?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both. Well-scoped work — assessments, dashboards, cost reviews, most migrations — is fixed-price. Open-ended advisory work runs as a fractional retainer instead. You'll always know which one you're signing up for before you commit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you protect our data and IP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every engagement starts with an NDA before any data or schema details are shared. Access is scoped to what the project needs, and case studies are only published anonymized or with explicit client sign-off."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to hire you to use the free tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The Migration Readiness Checklist, the SQL Cheat Sheet, the Query Pack, the Cost Estimator, and the Governance Template Pack are free to use whether or not you ever become a client."
+      }
+    }
+  ]
+}
+</script>
 
 <script src="script.js"></script>
 </body>

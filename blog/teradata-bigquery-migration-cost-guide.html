@@ -5,14 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What a Teradata to BigQuery Migration Actually Costs in 2026 | KloudOcean</title>
 <meta name="description" content="A real breakdown of Teradata to BigQuery migration costs — licensing overlap, conversion effort, validation, and the line items most estimates miss.">
-<link rel="canonical" href="https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide.html">
+<link rel="canonical" href="https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide">
 <meta name="theme-color" content="#0D1B2A">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="What a Teradata to BigQuery Migration Actually Costs in 2026">
 <meta property="og:description" content="A real breakdown of migration budgets — licensing overlap, conversion effort, validation, and the line items most estimates miss.">
-<meta property="og:url" content="https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide.html">
+<meta property="og:url" content="https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide">
 <meta property="og:image" content="https://thekloudocean.com/og-image.jpg">
+<meta property="article:published_time" content="2026-07-02T00:00:00Z">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,19 +26,21 @@
   "author": { "@type": "Organization", "name": "KloudOcean" },
   "publisher": { "@type": "Organization", "name": "KloudOcean" },
   "datePublished": "2026-07-02",
-  "mainEntityOfPage": "https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide.html"
+  "mainEntityOfPage": "https://thekloudocean.com/blog/teradata-bigquery-migration-cost-guide"
 }
 </script>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) — consent mode -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G5VW1T18RX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', { 'analytics_storage': 'denied' });
   gtag('js', new Date());
   gtag('config', 'G-G5VW1T18RX');
 </script>
 </head>
 <body>
+<div class="reading-progress"></div>
 
 <nav class="nav">
   <div class="nav-inner">
@@ -123,6 +126,21 @@
 
 <footer>
   <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="brand"><svg class="brand-mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="15" stroke="#31D6C8" stroke-width="1.4"/><path d="M6 18c3-4 6 4 10 0s7-4 10 0" stroke="#C9A24B" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>KloudOcean</a>
+        <p>Senior data engineering and migration specialists — Teradata, HDFS, and legacy platforms into BigQuery, done right.</p>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/company/kloudocean" class="social-icon" aria-label="LinkedIn"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
+          <a href="https://wa.me/919822529779" class="social-icon" aria-label="WhatsApp" data-track="whatsapp"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.1a8.08 8.08 0 0 1-4.13-1.13l-.3-.18-3.06.8.82-2.98-.2-.31A8.1 8.1 0 1 1 12 20.1zm4.4-6.05c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.92-1.18-.7-.63-1.18-1.4-1.32-1.64-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28z"/></svg></a>
+          <a href="mailto:info@thekloudocean.com" class="social-icon" aria-label="Email" data-track="email"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13zm2.4.5 7.6 6.2L19.6 6H4.4zM4 8.1v10.4h16V8.1l-7.5 6.1a1 1 0 0 1-1.2 0L4 8.1z"/></svg></a>
+        </div>
+        <div class="footer-legal">KLOUDOCEAN IT SERVICES AND SOLUTIONS<br>PRIVATE LIMITED<br>CIN: U62099PN2025PTC245874<br>GST: 27AAMCK1511B1Z0<br>Pune, Maharashtra 411036</div>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="/#services">Teradata Migration</a><a href="/#services">HDFS / Hive Migration</a><a href="/#services">Data Governance</a><a href="/#pricing">Quick Start Packages</a></div>
+      <div class="footer-col"><h4>Company</h4><a href="/about">About</a><a href="/blog">Blog</a><a href="/resources">Free Tools</a><a href="/#case-studies">Case Studies</a><a href="/#faq">FAQ</a></div>
+      <div class="footer-col"><h4>Legal</h4><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="mailto:info@thekloudocean.com" data-track="email">info@thekloudocean.com</a></div>
+    </div>
     <div class="footer-bottom">
       <span>© 2026 KloudOcean IT Services and Solutions Pvt Ltd. All rights reserved.</span>
       <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
@@ -134,6 +152,14 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.06-1.33A10 10 0 1 0 12 2zm0 18.1a8.08 8.08 0 0 1-4.13-1.13l-.3-.18-3.06.8.82-2.98-.2-.31A8.1 8.1 0 1 1 12 20.1zm4.4-6.05c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.92-1.18-.7-.63-1.18-1.4-1.32-1.64-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41-.14-.01-.3-.01-.46-.01-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.1-.22-.16-.46-.28z"/></svg>
 </a>
 
-<script src="../script.js"></script>
+<div class="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <p>We use cookies to understand how you use our site and improve your experience. See our <a href="/privacy">Privacy Policy</a>.</p>
+  <div class="cookie-banner-actions">
+    <button class="btn btn-secondary" data-consent="decline">Decline</button>
+    <button class="btn btn-primary" data-consent="accept">Accept</button>
+  </div>
+</div>
+
+<script src="/script.js"></script>
 </body>
 </html>
