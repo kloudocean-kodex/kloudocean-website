@@ -79,7 +79,7 @@ netlify.toml
 - Homepage `Organization` / `ProfessionalService` structured data.
 - FAQ schema on the homepage.
 - Branded custom 404 page.
-- Sitemap with `lastmod` dates and 16 indexable URLs.
+- Sitemap with `lastmod` dates and 14 SEO URLs; legal pages remain accessible but are not promoted in the sitemap.
 - Shared social preview image: `assets/og/cloud-data-migration-governance.jpg`.
 - `og:image`, `twitter:image`, dimensions, and image alt text on indexable pages.
 - Dedicated brand logo images for Organization schema, app/touch icons, and manifest usage.
