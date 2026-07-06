@@ -1,0 +1,17 @@
+<!-- Example: change a form to post to the Turnstile Worker instead of directly to Formspree.
+
+Replace action with your worker route (e.g. https://your-site.example.com/api/submit)
+Keep the client-side Turnstile widget present for best UX — the worker will verify the token.
+-->
+<form action="/api/submit" method="POST" class="gate-form form-inline" data-resource="ebook">
+  <input type="hidden" name="resource" value="ebook">
+  <label for="email">Email</label>
+  <input id="email" type="email" name="email" required placeholder="you@company.com">
+  <div class="cf-turnstile" data-sitekey="<YOUR_TURNSTILE_SITEKEY>"></div>
+  <button type="submit" class="btn btn-primary">Get resource</button>
+</form>
+
+<!-- Notes:
+ - Worker will add x_turnstile_verified and x_submitted_via fields before forwarding.
+ - Keep client-side fallback logic (already present in script.js) so submissions still work when challenges.cloudflare.com is blocked.
+ -->

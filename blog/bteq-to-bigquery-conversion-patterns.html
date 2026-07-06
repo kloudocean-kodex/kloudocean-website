@@ -112,11 +112,11 @@
   <div class="container">
     <a href="/blog" class="back-link">&larr; All posts</a>
     <div class="eyebrow">Technical</div>
-    <h1 style="font-size:clamp(1.9rem,3.8vw,2.9rem); max-width:780px;">BTEQ to BigQuery: The Conversion Patterns That Actually Break</h1>
+    <h1 class="page-hero-title">BTEQ to BigQuery: The Conversion Patterns That Actually Break</h1>
   </div>
 </header>
 
-<section class="section" style="padding-top:0;">
+<section class="section no-pt">
   <div class="container">
     <div class="post-body">
       <p>Automated BTEQ-to-BigQuery converters handle the obvious 80% fine &mdash; SELECT statements, basic joins, standard data types. The failures cluster around a small set of patterns that show up in almost every legacy Teradata environment. Here's what to check for before you trust a converted script.</p>
@@ -143,8 +143,8 @@
       <p>Every one of these failure modes shares the same root cause: BTEQ and BigQuery SQL look similar enough that a syntax-level converter produces something that <em>runs</em>. Whether it runs <em>correctly</em> is a separate question &mdash; and the gap between those two is exactly where migration budgets and timelines go wrong. Automated conversion is a legitimate first pass. It is not a substitute for someone who has personally chased down a sentinel-date bug in production and knows to look for the next one.</p>
 
       <div class="post-cta">
-        <h3 style="margin-bottom:0.5rem;">Inheriting a BTEQ-heavy environment?</h3>
-        <p style="margin-bottom:var(--space-3);">A Migration Assessment flags exactly which of these patterns exist in your scripts before conversion starts &mdash; not after something breaks in production.</p>
+        <h3 class="mb-1">Inheriting a BTEQ-heavy environment?</h3>
+        <p class="mb-3">A Migration Assessment flags exactly which of these patterns exist in your scripts before conversion starts &mdash; not after something breaks in production.</p>
         <a href="/#pricing" class="btn btn-primary">See the Migration Assessment</a>
       </div>
     </div>

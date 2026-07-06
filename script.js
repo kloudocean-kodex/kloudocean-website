@@ -203,6 +203,64 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.gate-form').forEach(form =>
     form.addEventListener('submit', () => trackLeadEvent('resource_unlock', { resource: form.dataset.resource || 'unknown' })));
 
+  /* ---- Cloudflare Turnstile fallback ----
+     If Turnstile fails to load (corporate firewall or challenges.cloudflare.com blocked)
+     we allow a graceful fallback so leads are not lost. A hidden field is appended
+     so backend operators can triage fallback submissions. Timeout is short (2s).
+  */
+  document.querySelectorAll('.gate-form').forEach(form => {
+    const turnstileEl = form.querySelector('.cf-turnstile');
+    // mark whether widget loaded
+    let widgetLoaded = false;
+
+    if (turnstileEl) {
+      // If Cloudflare exposes the turnstile API, consider that loaded.
+      if (window.turnstile) widgetLoaded = true;
+
+      // Also watch for the iframe node that the widget injects
+      const iframe = turnstileEl.querySelector('iframe');
+      if (iframe) widgetLoaded = true;
+
+      // After a short delay, if still not loaded, enable fallback
+      setTimeout(() => {
+        if (!widgetLoaded) {
+          // append a hidden fallback marker so server knows this used fallback
+          if (!form.querySelector('input[name="fallback_captcha"]')) {
+            const h = document.createElement('input');
+            h.type = 'hidden';
+            h.name = 'fallback_captcha';
+            h.value = '1';
+            form.appendChild(h);
+          }
+          // show a small inline note to the user (non-blocking)
+          let note = form.querySelector('.fallback-note');
+          if (!note) {
+            note = document.createElement('div');
+            note.className = 'fallback-note';
+            note.setAttribute('role', 'status');
+            note.setAttribute('aria-live', 'polite');
+            note.textContent = 'Security widget unavailable — submitting directly. We may follow up to verify.';
+            form.appendChild(note);
+          }
+        }
+      }, 2000);
+    }
+
+    // on submit, ensure fallback marker is present when widget not loaded
+    form.addEventListener('submit', (e) => {
+      // if widget element exists but API not available, ensure marker
+      if (turnstileEl && !window.turnstile) {
+        if (!form.querySelector('input[name="fallback_captcha"]')) {
+          const h = document.createElement('input');
+          h.type = 'hidden';
+          h.name = 'fallback_captcha';
+          h.value = '1';
+          form.appendChild(h);
+        }
+      }
+    });
+  });
+
   /* ---- Migration Cost Estimator (resources.html only) ----
      Everything here is an educational estimate, not a quote - the copy
      around this widget says so, and the numbers are deliberately

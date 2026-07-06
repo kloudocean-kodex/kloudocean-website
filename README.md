@@ -107,6 +107,11 @@ _headers
 ## Pending Technical Setup (needs your Cloudflare/Formspree dashboard access — can't be done from the repo alone)
 
 - **Turnstile bot protection**: `cf-turnstile` widgets are live on all 6 forms sharing the `mqeoozan` Formspree endpoint (assessment form, MIKO waitlist, and all 4 resource-gate forms), using Site Key `0x4AAAAAADwFlBCNQZy9vtWV`. **Still needed:** paste the matching Secret Key into Formspree's dashboard (that form's Settings → CAPTCHA → Cloudflare Turnstile) — this has to be done in the Formspree account directly, it can't be done from the repo. Until that's done, the widgets render but nothing is actually being blocked yet.
+- **Server-side worker (optional but recommended):** A Cloudflare Worker is included at `workers/turnstile-worker/worker.js`. Deploy it and set two secrets/bindings:
+  - `TURNSTILE_SECRET` &mdash; your Turnstile secret key
+  - `FORMSPREE_ENDPOINT` &mdash; the Formspree action URL (e.g. `https://formspree.io/f/mqeoozan`)
+
+  After deploying the worker, point site forms to the worker route (example: `/api/submit`). The worker verifies Turnstile tokens and forwards to Formspree, tagging submissions with `x_turnstile_verified` or `x_fallback_marker` when the client-side widget failed to load.
 - ~~**Branded Calendly slug**: still `calendly.com/rajputrupali138/30min` everywhere.~~ **Done.** All CTAs now point to `calendly.com/kloudocean/strategy_meeting`.
 
 ## Operational Notes
