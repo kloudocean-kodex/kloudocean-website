@@ -249,10 +249,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const schemaVal = estimator.querySelector('#est-schemas-val');
     const bteqVal = estimator.querySelector('#est-bteq-val');
 
-    const rangeLow = estimator.querySelector('#estimate-low');
-    const rangeHigh = estimator.querySelector('#estimate-high');
-    const weeksOut = estimator.querySelector('#estimate-weeks');
-    const disclaimerNote = estimator.querySelector('#estimate-floor-note');
+    const rangeLow = document.querySelector('#estimate-low');
+    const rangeHigh = document.querySelector('#estimate-high');
+    const weeksOut = document.querySelector('#estimate-weeks');
+    const riskValue = document.querySelector('#estimate-risk-value');
+    const riskDesc = document.querySelector('#estimate-risk-desc');
+    const gaugeActiveTrack = document.querySelector('#gauge-active-track');
+    const gaugeNeedle = document.querySelector('#gauge-needle');
+    const disclaimerNote = document.querySelector('#estimate-floor-note');
 
     const fmt = (n) => Math.round(n).toLocaleString('en-US');
 
@@ -368,11 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (timeline === 'rush') riskScore += 0.2;
         if (timeline === 'flexible') riskScore -= 0.1;
         riskScore = Math.max(0.05, Math.min(0.95, riskScore));
-
-        const riskValue = document.querySelector('#estimate-risk-value');
-        const gaugeActiveTrack = document.querySelector('#gauge-active-track');
-        const gaugeNeedle = document.querySelector('#gauge-needle');
-        const riskDesc = document.querySelector('#estimate-risk-desc');
 
         if (riskValue) {
           riskValue.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
