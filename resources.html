@@ -85,12 +85,12 @@
   <div class="container">
     <div class="eyebrow">Free, Before You Hire Us</div>
     <h1 class="page-hero-title page-hero-title--large">Everything here is free &mdash; whether or not you ever become a client.</h1>
-    <p style="max-width:600px; margin-top:var(--space-2);">The estimator and checklist need nothing from you. The rest take thirty seconds to unlock with an email.</p>
+    <p class="max-w-600 mt-2">The estimator and checklist need nothing from you. The rest take thirty seconds to unlock with an email.</p>
   </div>
 </header>
 
 <!-- ===================== ESTIMATOR ===================== -->
-<section class="section" id="estimator" style="padding-top:0;">
+<section class="section" id="estimator" class="no-pt">
   <div class="container">
     <div class="section-head">
       <div class="eyebrow">Interactive &middot; Instant</div>
@@ -113,8 +113,8 @@
           <input type="range" id="est-bteq" min="0" max="3000" step="10" value="200">
         </div>
         <div class="estimator-field">
-          <label style="display:block;">Target timeline</label>
-          <select id="est-timeline" style="width:100%; margin-top:0.3rem;">
+          <label class="d-block">Target timeline</label>
+          <select id="est-timeline" class="full-width mt-1">
             <option value="rush">Rush &mdash; under 8 weeks</option>
             <option value="standard" selected>Standard &mdash; 2&ndash;4 months</option>
             <option value="flexible">Flexible &mdash; 4&ndash;6+ months</option>
@@ -129,7 +129,7 @@
           <div><b>Estimated timeline:</b> <span id="estimate-weeks">--</span></div>
           <div><b>Risk level:</b> <span class="risk-badge risk-low" id="estimate-risk">--</span></div>
         </div>
-        <p class="estimator-disclaimer" id="estimate-floor-note" style="display:none;">Estimate floored at our Quick Start package minimum ($599 assessment / $899 full assessment).</p>
+        <p class="estimator-disclaimer is-hidden" id="estimate-floor-note">Estimate floored at our Quick Start package minimum ($599 assessment / $899 full assessment).</p>
         <p class="estimator-disclaimer">Educational estimate only, not a quote. Our paid Migration Assessment scores your platform's actual complexity and returns a fixed price.</p>
 
         <div class="estimator-email">
@@ -142,7 +142,7 @@
             <input type="hidden" name="bteq_count" value="">
             <input type="hidden" name="timeline" value="">
             <input type="hidden" name="estimate_range" value="">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAADwFlBCNQZy9vtWV" style="margin-bottom:0.6rem;"></div>
+            <div class="cf-turnstile mb-1" data-sitekey="0x4AAAAAADwFlBCNQZy9vtWV"></div>
             <input type="email" name="email" placeholder="you@company.com" required>
             <button type="submit" class="btn btn-primary">Email Me This + Book a Call</button>
           </form>
@@ -229,7 +229,7 @@
       </div>
     </div>
 
-    <p style="margin-top:var(--space-4); font-size:0.85rem; color:var(--ink-faint);">Unlocking a resource sends your email to KloudOcean so we can send the file and, occasionally, follow up about it. No spam, no list sold &mdash; see our <a href="/privacy" style="color:var(--cyan); text-decoration:underline;">Privacy Policy</a>.</p>
+    <p class="mt-4 text-small">Unlocking a resource sends your email to KloudOcean so we can send the file and, occasionally, follow up about it. No spam, no list sold &mdash; see our <a href="/privacy" class="link-cyan">Privacy Policy</a>.</p>
   </div>
 </section>
 

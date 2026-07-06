@@ -1,0 +1,20 @@
+name = "kloudocean-turnstile-worker"
+main = "worker.js"
+compatibility_date = "2026-07-06"
+
+# Optional: set account_id if you know it
+# account_id = "your-cloudflare-account-id"
+
+[vars]
+FORMSPREE_ENDPOINT = "https://formspree.io/f/mqeoozan"
+
+# Secrets must be set via `wrangler secret put TURNSTILE_SECRET`
+
+[build]
+command = ""
+
+[dev]
+# dev settings if using wrangler dev
+
+# Routes: set when publishing via dashboard or using Pages integration
+# Example route mapping (Cloudflare dashboard): https://your-site.example.com/api/submit -> this worker

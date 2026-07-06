@@ -409,6 +409,29 @@ em { font-style: italic; color: var(--cyan); }
 .max-w-780 { max-width: 780px; }
 .illustration-muted { margin-top: 4rem; opacity: 0.3; max-width: 400px; }
 .success-mark { font-size: 3.5rem; }
+/* Additional utilities for inline-style refactor */
+.no-pt { padding-top: 0 !important; }
+.align-start { align-items: start; gap: var(--space-6); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-1 { margin-top: var(--space-1); }
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-3 { margin-bottom: var(--space-3); }
+.max-w-600 { max-width: 600px; }
+.d-block { display: block; }
+.full-width { width: 100%; }
+.is-hidden { display: none !important; }
+.text-small { font-size: 0.9rem; color: var(--ink-faint); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mt-5 { margin-top: var(--space-5); }
+/* Additional small utilities */
+.text-faint { color: var(--ink-faint); }
+.flex-1 { flex: 1 1 auto; }
+.min-w-200 { min-width: 200px; }
+.link-cyan { color: var(--cyan); text-decoration: underline; }
+.d-flex { display: flex; }
+.gap-3 { gap: var(--space-3); }
+.flex-wrap { flex-wrap: wrap; }
+.meta-mono { color: var(--ink-faint); font-family: var(--font-mono); font-size: 0.85rem; }
 label { display: block; font-size: 0.85rem; color: var(--ink-dim); margin-bottom: 0.4rem; }
 input, select, textarea {
   width: 100%; background: var(--navy-deep); border: 1px solid var(--navy-line);
