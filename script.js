@@ -249,10 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const schemaVal = estimator.querySelector('#est-schemas-val');
     const bteqVal = estimator.querySelector('#est-bteq-val');
 
-    const rangeLow = document.querySelector('#estimate-low');
-    const rangeHigh = document.querySelector('#estimate-high');
-    const weeksOut = document.querySelector('#estimate-weeks');
-    const disclaimerNote = document.querySelector('#estimate-floor-note');
+    const rangeLow = estimator.querySelector('#estimate-low');
+    const rangeHigh = estimator.querySelector('#estimate-high');
+    const weeksOut = estimator.querySelector('#estimate-weeks');
+    const disclaimerNote = estimator.querySelector('#estimate-floor-note');
 
     const fmt = (n) => Math.round(n).toLocaleString('en-US');
 
@@ -387,8 +387,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    [tbInput, schemaInput, bteqInput, timelineInput].forEach(el =>
+    [tbInput, schemaInput, bteqInput].forEach(el =>
       el.addEventListener('input', calculate));
+    timelineInput.addEventListener('change', calculate);
     calculate();
   }
 
