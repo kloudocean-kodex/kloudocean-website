@@ -297,111 +297,115 @@ document.addEventListener('DOMContentLoaded', () => {
       disclaimerNote.style.display = floorNote ? 'block' : 'none';
 
       // Visual Updates
-      const storageCost = tb * 150;
-      const schemaCost = schemas * 800;
-      const bteqCost = bteq * 180;
-      const totalBase = storageCost + schemaCost + bteqCost || 1;
+      try {
+        const storageCost = tb * 150;
+        const schemaCost = schemas * 800;
+        const bteqCost = bteq * 180;
+        const totalBase = storageCost + schemaCost + bteqCost || 1;
 
-      let storagePct = Math.max(0, Math.min(100, Math.round((storageCost / totalBase) * 100)));
-      let schemaPct = Math.max(0, Math.min(100, Math.round((schemaCost / totalBase) * 100)));
-      let bteqPct = 100 - storagePct - schemaPct;
-      if (bteqPct < 0) {
-        const remainder = storagePct + schemaPct - 100;
-        if (storagePct > schemaPct) storagePct = Math.max(0, storagePct - remainder);
-        else schemaPct = Math.max(0, schemaPct - remainder);
-        bteqPct = Math.max(0, 100 - storagePct - schemaPct);
-      }
-
-      // Update Legend Pct
-      const storagePctEl = estimator.querySelector('#storage-pct');
-      const schemaPctEl = estimator.querySelector('#schema-pct');
-      const bteqPctEl = estimator.querySelector('#bteq-pct');
-      if (storagePctEl) storagePctEl.textContent = storagePct + '%';
-      if (schemaPctEl) schemaPctEl.textContent = schemaPct + '%';
-      if (bteqPctEl) bteqPctEl.textContent = bteqPct + '%';
-
-      const pieContainer = estimator.querySelector('#pie-segments');
-      if (pieContainer) {
-        pieContainer.innerHTML = '';
-        const radius = 38;
-        const center = 50;
-        const segments = [
-          { value: storagePct, color: 'var(--cyan)' },
-          { value: schemaPct, color: 'var(--brass)' },
-          { value: bteqPct, color: '#8892B0' }
-        ];
-
-        const polarToCartesian = (cx, cy, r, angle) => {
-          const rad = (angle - 90) * Math.PI / 180;
-          return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
-        };
-
-        const describeArc = (cx, cy, r, startAngle, endAngle) => {
-          if (endAngle <= startAngle) return '';
-          const start = polarToCartesian(cx, cy, r, endAngle);
-          const end = polarToCartesian(cx, cy, r, startAngle);
-          const largeArc = endAngle - startAngle <= 180 ? '0' : '1';
-          return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}`;
-        };
-
-        let currentAngle = -90;
-        segments.forEach(segment => {
-          if (!segment.value) return;
-          const endAngle = currentAngle + (segment.value / 100) * 360;
-          const pathData = describeArc(center, center, radius, currentAngle, endAngle);
-          if (!pathData) return;
-
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', pathData);
-          path.setAttribute('fill', 'none');
-          path.setAttribute('stroke', segment.color);
-          path.setAttribute('stroke-width', '12');
-          path.setAttribute('stroke-linecap', 'round');
-          path.setAttribute('opacity', '0.95');
-          pieContainer.appendChild(path);
-          currentAngle = endAngle;
-        });
-      }
-
-      let riskScore = (bteq / 3000) * 0.5 + (tb / 1000) * 0.5;
-      if (timeline === 'rush') riskScore += 0.2;
-      if (timeline === 'flexible') riskScore -= 0.1;
-      riskScore = Math.max(0.05, Math.min(0.95, riskScore));
-
-      const riskValue = estimator.querySelector('#estimate-risk-value');
-      const gaugeActiveTrack = estimator.querySelector('#gauge-active-track');
-      const gaugeNeedle = estimator.querySelector('#gauge-needle');
-      const riskDesc = estimator.querySelector('#estimate-risk-desc');
-
-      if (riskValue) {
-        riskValue.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
-        if (risk === 'high') {
-          riskValue.style.color = '#EF4444';
-        } else if (risk === 'medium') {
-          riskValue.style.color = '#C9A24B';
-        } else {
-          riskValue.style.color = '#31D6C8';
+        let storagePct = Math.max(0, Math.min(100, Math.round((storageCost / totalBase) * 100)));
+        let schemaPct = Math.max(0, Math.min(100, Math.round((schemaCost / totalBase) * 100)));
+        let bteqPct = 100 - storagePct - schemaPct;
+        if (bteqPct < 0) {
+          const remainder = storagePct + schemaPct - 100;
+          if (storagePct > schemaPct) storagePct = Math.max(0, storagePct - remainder);
+          else schemaPct = Math.max(0, schemaPct - remainder);
+          bteqPct = Math.max(0, 100 - storagePct - schemaPct);
         }
-      }
 
-      if (gaugeActiveTrack) {
-        const offset = 110 - (riskScore * 110);
-        gaugeActiveTrack.setAttribute('stroke-dashoffset', offset);
-      }
-      
-      if (gaugeNeedle) {
-        const angle = -90 + (riskScore * 180);
-        gaugeNeedle.setAttribute('transform', `rotate(${angle} 50 50)`);
-      }
-      
-      if (riskDesc) {
-        if (risk === 'high') {
-          riskDesc.textContent = 'High complexity requires significant governance, potential architecture changes, and custom scripting.';
-        } else if (risk === 'medium') {
-          riskDesc.textContent = 'Moderate complexity. Standard migration patterns apply, but careful planning is needed for BTEQ conversions.';
-        } else {
-          riskDesc.textContent = 'Low risk profile. Straightforward lift-and-shift with automated schema conversions.';
+        // Update Legend Pct
+        const storagePctEl = document.querySelector('#storage-pct');
+        const schemaPctEl = document.querySelector('#schema-pct');
+        const bteqPctEl = document.querySelector('#bteq-pct');
+        if (storagePctEl) storagePctEl.textContent = storagePct + '%';
+        if (schemaPctEl) schemaPctEl.textContent = schemaPct + '%';
+        if (bteqPctEl) bteqPctEl.textContent = bteqPct + '%';
+
+        const pieContainer = document.querySelector('#pie-segments');
+        if (pieContainer) {
+          pieContainer.innerHTML = '';
+          const radius = 38;
+          const center = 50;
+          const segments = [
+            { value: storagePct, color: 'var(--cyan)' },
+            { value: schemaPct, color: 'var(--brass)' },
+            { value: bteqPct, color: '#8892B0' }
+          ];
+
+          const polarToCartesian = (cx, cy, r, angle) => {
+            const rad = (angle - 90) * Math.PI / 180;
+            return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+          };
+
+          const describeArc = (cx, cy, r, startAngle, endAngle) => {
+            if (endAngle <= startAngle) return '';
+            const start = polarToCartesian(cx, cy, r, endAngle);
+            const end = polarToCartesian(cx, cy, r, startAngle);
+            const largeArc = endAngle - startAngle <= 180 ? '0' : '1';
+            return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}`;
+          };
+
+          let currentAngle = -90;
+          segments.forEach(segment => {
+            if (!segment.value) return;
+            const endAngle = currentAngle + (segment.value / 100) * 360;
+            const pathData = describeArc(center, center, radius, currentAngle, endAngle);
+            if (!pathData) return;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', pathData);
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', segment.color);
+            path.setAttribute('stroke-width', '12');
+            path.setAttribute('stroke-linecap', 'round');
+            path.setAttribute('opacity', '0.95');
+            pieContainer.appendChild(path);
+            currentAngle = endAngle;
+          });
         }
+
+        let riskScore = (bteq / 3000) * 0.5 + (tb / 1000) * 0.5;
+        if (timeline === 'rush') riskScore += 0.2;
+        if (timeline === 'flexible') riskScore -= 0.1;
+        riskScore = Math.max(0.05, Math.min(0.95, riskScore));
+
+        const riskValue = document.querySelector('#estimate-risk-value');
+        const gaugeActiveTrack = document.querySelector('#gauge-active-track');
+        const gaugeNeedle = document.querySelector('#gauge-needle');
+        const riskDesc = document.querySelector('#estimate-risk-desc');
+
+        if (riskValue) {
+          riskValue.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+          if (risk === 'high') {
+            riskValue.style.color = '#EF4444';
+          } else if (risk === 'medium') {
+            riskValue.style.color = '#C9A24B';
+          } else {
+            riskValue.style.color = '#31D6C8';
+          }
+        }
+
+        if (gaugeActiveTrack) {
+          const offset = 110 - (riskScore * 110);
+          gaugeActiveTrack.setAttribute('stroke-dashoffset', offset);
+        }
+        
+        if (gaugeNeedle) {
+          const angle = -90 + (riskScore * 180);
+          gaugeNeedle.setAttribute('transform', `rotate(${angle} 50 50)`);
+        }
+        
+        if (riskDesc) {
+          if (risk === 'high') {
+            riskDesc.textContent = 'High complexity requires significant governance, potential architecture changes, and custom scripting.';
+          } else if (risk === 'medium') {
+            riskDesc.textContent = 'Moderate complexity. Standard migration patterns apply, but careful planning is needed for BTEQ conversions.';
+          } else {
+            riskDesc.textContent = 'Low risk profile. Straightforward lift-and-shift with automated schema conversions.';
+          }
+        }
+      } catch (e) {
+        console.error('Estimator visual update error:', e);
       }
 
       // Keep hidden fields in sync so the optional "email me this" form
