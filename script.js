@@ -252,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const rangeLow = document.querySelector('#estimate-low');
     const rangeHigh = document.querySelector('#estimate-high');
     const weeksOut = document.querySelector('#estimate-weeks');
-    const riskOut = document.querySelector('#estimate-risk');
     const disclaimerNote = document.querySelector('#estimate-floor-note');
 
     const fmt = (n) => Math.round(n).toLocaleString('en-US');
@@ -295,31 +294,65 @@ document.addEventListener('DOMContentLoaded', () => {
       rangeLow.textContent = fmt(low);
       rangeHigh.textContent = fmt(high);
       weeksOut.textContent = weeks + (weeks === 1 ? ' week' : ' weeks');
-      riskOut.className = 'risk-badge risk-' + risk;
-      riskOut.textContent = risk.charAt(0).toUpperCase() + risk.slice(1) + ' Risk';
       disclaimerNote.style.display = floorNote ? 'block' : 'none';
 
       // Visual Updates
       const storageCost = tb * 150;
       const schemaCost = schemas * 800;
       const bteqCost = bteq * 180;
-      const totalBase = storageCost + schemaCost + bteqCost;
+      const totalBase = storageCost + schemaCost + bteqCost || 1;
 
-      const storagePct = (storageCost / totalBase) * 100;
-      const schemaPct = (schemaCost / totalBase) * 100;
-      const bteqPct = (bteqCost / totalBase) * 100;
+      let storagePct = Math.max(0, Math.min(100, Math.round((storageCost / totalBase) * 100)));
+      let schemaPct = Math.max(0, Math.min(100, Math.round((schemaCost / totalBase) * 100)));
+      let bteqPct = 100 - storagePct - schemaPct;
+      if (bteqPct < 0) {
+        const remainder = storagePct + schemaPct - 100;
+        if (storagePct > schemaPct) storagePct = Math.max(0, storagePct - remainder);
+        else schemaPct = Math.max(0, schemaPct - remainder);
+        bteqPct = Math.max(0, 100 - storagePct - schemaPct);
+      }
 
-      const segmentStorage = estimator.querySelector('.segment-storage');
-      const segmentSchema = estimator.querySelector('.segment-schema');
-      const segmentBteq = estimator.querySelector('.segment-bteq');
+      const pieContainer = estimator.querySelector('#pie-segments');
+      if (pieContainer) {
+        pieContainer.innerHTML = '';
+        const radius = 35;
+        const center = 50;
+        const segments = [
+          { value: storagePct, color: 'var(--cyan)' },
+          { value: schemaPct, color: 'var(--brass)' },
+          { value: bteqPct, color: '#8892B0' }
+        ];
 
-      if (segmentStorage && segmentSchema && segmentBteq) {
-        segmentStorage.style.strokeDasharray = `${storagePct} 100`;
-        segmentStorage.style.strokeDashoffset = `0`;
-        segmentSchema.style.strokeDasharray = `${schemaPct} 100`;
-        segmentSchema.style.strokeDashoffset = `-${storagePct}`;
-        segmentBteq.style.strokeDasharray = `${bteqPct} 100`;
-        segmentBteq.style.strokeDashoffset = `-${storagePct + schemaPct}`;
+        const polarToCartesian = (cx, cy, r, angle) => {
+          const rad = (angle - 90) * Math.PI / 180;
+          return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+        };
+
+        const describeArc = (cx, cy, r, startAngle, endAngle) => {
+          if (endAngle <= startAngle) return '';
+          const start = polarToCartesian(cx, cy, r, endAngle);
+          const end = polarToCartesian(cx, cy, r, startAngle);
+          const largeArc = endAngle - startAngle <= 180 ? '0' : '1';
+          return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}`;
+        };
+
+        let currentAngle = -90;
+        segments.forEach(segment => {
+          if (!segment.value) return;
+          const endAngle = currentAngle + (segment.value / 100) * 360;
+          const pathData = describeArc(center, center, radius, currentAngle, endAngle);
+          if (!pathData) return;
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', pathData);
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', segment.color);
+          path.setAttribute('stroke-width', '15');
+          path.setAttribute('stroke-linecap', 'round');
+          path.setAttribute('opacity', '0.95');
+          pieContainer.appendChild(path);
+          currentAngle = endAngle;
+        });
       }
 
       let riskScore = (bteq / 3000) * 0.5 + (tb / 1000) * 0.5;
@@ -327,11 +360,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (timeline === 'flexible') riskScore -= 0.1;
       riskScore = Math.max(0.05, Math.min(0.95, riskScore));
 
-      const gaugeFill = estimator.querySelector('.speed-fill');
-      const needle = estimator.querySelector('.speed-needle');
-      if (gaugeFill && needle) {
-        gaugeFill.style.strokeDashoffset = 125.6 - (125.6 * riskScore);
-        needle.style.transform = `rotate(${-90 + (riskScore * 180)}deg)`;
+      const riskValue = estimator.querySelector('#estimate-risk-value');
+      const riskBar = estimator.querySelector('#estimate-risk-bar');
+      if (riskValue) {
+        riskValue.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+      }
+      if (riskBar) {
+        riskBar.style.width = `${Math.round(riskScore * 100)}%`;
+        riskBar.style.background =
+          risk === 'high'
+            ? 'linear-gradient(90deg, #F97316 0%, #EF4444 100%)'
+            : risk === 'medium'
+            ? 'linear-gradient(90deg, #31D6C8 0%, #C9A24B 100%)'
+            : 'linear-gradient(90deg, #31D6C8 0%, #6EE7B7 100%)';
       }
 
       // Keep hidden fields in sync so the optional "email me this" form

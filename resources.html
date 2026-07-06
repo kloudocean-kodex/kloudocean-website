@@ -24,6 +24,24 @@
 <meta name="twitter:image:alt" content="KloudOcean cloud data migration and governance preview image">
 <meta name="twitter:title" content="Free Resources &mdash; KloudOcean">
 <meta name="twitter:description" content="Interactive Migration Cost Estimator, Readiness Checklist, SQL Cheat Sheet, Query Pack, and Governance Templates &mdash; all free.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://thekloudocean.com/resources",
+  "name": "Free Resources — KloudOcean",
+  "description": "Interactive Migration Cost Estimator, Readiness Checklist, SQL Cheat Sheet, Query Pack, and Governance Templates — all free.",
+  "inLanguage": "en-US",
+  "publisher": {
+    "@type": "Organization",
+    "name": "KloudOcean",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://thekloudocean.com/assets/brand/kloudocean-logo-512.png"
+    }
+  }
+}
+</script>
 <!-- TEMPLATE: HEAD_COMMON -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +105,7 @@
 </header>
 
 <!-- ===================== ESTIMATOR ===================== -->
-<section class="section" id="estimator" class="no-pt">
+<section class="section no-pt" id="estimator">
   <div class="container">
     <div class="section-head">
       <div class="eyebrow">Interactive &middot; Instant</div>
@@ -126,41 +144,30 @@
           <div><b>Estimated timeline:</b> <span id="estimate-weeks">--</span></div>
         </div>
         
-        <div class="estimate-visuals mt-4 mb-4">
+        <div class="estimate-visuals mt-3 mb-3">
           <div class="estimate-chart">
-            <svg viewBox="0 0 36 36" class="donut-chart">
-              <path class="donut-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="3"></path>
-              <path class="donut-segment segment-storage" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--cyan)" stroke-width="3" style="transition: stroke-dasharray 0.6s ease;"></path>
-              <path class="donut-segment segment-schema" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="var(--brass)" stroke-width="3" style="transition: stroke-dasharray 0.6s ease; stroke-dashoffset: 0;"></path>
-              <path class="donut-segment segment-bteq" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#8892B0" stroke-width="3" style="transition: stroke-dasharray 0.6s ease; stroke-dashoffset: 0;"></path>
-              <g class="donut-text">
-                <text x="18" y="20.5" font-family="var(--font-mono)" font-size="10px" fill="var(--ink)" text-anchor="middle">SPLIT</text>
-              </g>
-            </svg>
+            <div class="pie-chart-container">
+              <svg viewBox="0 0 100 100" class="pie-chart">
+                <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="15"></circle>
+                <g class="pie-segments" id="pie-segments"></g>
+                <text x="50" y="50" text-anchor="middle" dy="0.3em" class="pie-text">SPLIT</text>
+              </svg>
+            </div>
             <div class="chart-legend">
-              <div><span class="dot storage-dot"></span> Storage</div>
-              <div><span class="dot schema-dot"></span> Schema</div>
-              <div><span class="dot bteq-dot"></span> BTEQ</div>
+              <div><span class="dot storage-dot"></span> <span class="storage-label">Storage</span></div>
+              <div><span class="dot schema-dot"></span> <span class="schema-label">Schema</span></div>
+              <div><span class="dot bteq-dot"></span> <span class="bteq-label">BTEQ</span></div>
             </div>
           </div>
           
-          <div class="estimate-speedometer">
-            <svg viewBox="0 0 100 50" class="speedometer">
-              <path class="speed-bg" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8" stroke-linecap="round"></path>
-              <path class="speed-fill" stroke-dasharray="125.6" stroke-dashoffset="125.6" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="url(#risk-grad)" stroke-width="8" stroke-linecap="round" style="transition: stroke-dashoffset 0.6s ease;"></path>
-              <defs>
-                <linearGradient id="risk-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#31D6C8" />
-                  <stop offset="50%" stop-color="#C9A24B" />
-                  <stop offset="100%" stop-color="#D9534F" />
-                </linearGradient>
-              </defs>
-              <g class="speed-needle" style="transform-origin: 50px 50px; transform: rotate(-90deg); transition: transform 0.6s ease-out;">
-                <circle cx="50" cy="50" r="4" fill="var(--ink)"/>
-                <path d="M 48 50 L 50 15 L 52 50 Z" fill="var(--ink)"/>
-              </g>
-            </svg>
-            <div class="speed-label">Risk: <span class="risk-badge risk-low" id="estimate-risk">--</span></div>
+          <div class="estimate-risk-gauge">
+            <div class="gauge-display">
+              <div class="gauge-value" id="estimate-risk-value">--</div>
+              <div class="gauge-label">Risk Level</div>
+            </div>
+            <div class="gauge-bar">
+              <div class="gauge-fill" id="estimate-risk-bar"></div>
+            </div>
           </div>
         </div>
         <p class="estimator-disclaimer is-hidden" id="estimate-floor-note">Estimate floored at our Quick Start package minimum ($599 assessment / $899 full assessment).</p>
