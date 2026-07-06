@@ -20,7 +20,8 @@
   --brass-bright: #E0BE73;
   --ink: #EDF2F7;             /* primary text */
   --ink-dim: #9FB3C8;         /* secondary text */
-  --ink-faint: #6C879E;       /* tertiary / caption text */
+  --ink-faint: #6C879E;       /* tertiary / caption text — 4.64:1 on navy-deep, passes AA */
+  --ink-faint-oncard: #85A0B8; /* tertiary text specifically on navy-mid card backgrounds — 4.5:1+, passes AA where --ink-faint alone (3.52:1) would fail */
   --success: #4ADE80;
 
   /* Type */
@@ -280,6 +281,15 @@ em { font-style: italic; color: var(--cyan); }
   padding: var(--space-4);
   transition: border-color 0.2s ease, transform 0.2s ease;
 }
+
+/* Accessibility fix: --ink-faint (#6C879E) is 4.64:1 on --navy-deep (passes AA)
+   but only 3.52:1 on --navy-mid (fails AA). Every navy-mid container gets the
+   card-safe variant scoped via custom-property cascade, so this can't regress
+   as new navy-mid components get added later. */
+.card, .estimator, .download-row, .method-step, .person-card,
+.founder-card, .testimonial-card, .estimator-result {
+  --ink-faint: var(--ink-faint-oncard);
+}
 .card:hover { border-color: var(--cyan-dim); transform: translateY(-3px); }
 .card h3 { margin-bottom: 0.6rem; }
 .card p { font-size: 0.95rem; }
@@ -533,7 +543,9 @@ footer { border-top: 1px solid var(--navy-line); padding: var(--space-6) 0 var(-
   border: 1px solid var(--navy-line);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-weight: 600; color: var(--cyan); font-size: 1.1rem;
+  overflow: hidden;
 }
+.person-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .person-card h3 { margin-bottom: 0.1rem; font-size: 1.1rem; }
 .person-role { font-family: var(--font-mono); font-size: 0.72rem; color: var(--brass); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.6rem; display: block; }
 .person-card p { font-size: 0.9rem; }

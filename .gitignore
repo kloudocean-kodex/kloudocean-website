@@ -1,2 +1,9 @@
-# Local Netlify folder
+# Local Netlify folder (legacy, safe to keep ignoring)
 .netlify
+
+# Local Wrangler cache/state
+.wrangler
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db

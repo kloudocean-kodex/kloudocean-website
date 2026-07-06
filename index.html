@@ -83,6 +83,7 @@
   gtag('js', new Date());
   gtag('config', 'G-G5VW1T18RX');
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -104,7 +105,7 @@
     </div>
     <div class="nav-cta">
       <a href="/#contact" class="btn btn-secondary">Get in Touch</a>
-      <a href="https://calendly.com/rajputrupali138/30min" class="btn btn-primary" data-track="calendly">Book Free Call</a>
+      <a href="https://calendly.com/kloudocean/strategy_meeting" class="btn btn-primary" data-track="calendly">Book Free Call</a>
     </div>
   </div>
 </nav>
@@ -118,7 +119,7 @@
       <p class="lede" style="font-size:1rem; color:var(--ink-faint); margin-top:-0.5rem; margin-bottom:var(--space-3);">Founder-led delivery for companies that need enterprise-grade execution without building a full internal data team.</p>
       <div class="hero-actions">
         <a href="/#contact" class="btn btn-primary">Request Free Assessment</a>
-        <a href="https://calendly.com/rajputrupali138/30min" class="btn btn-secondary" data-track="calendly">Book a Strategy Call &rarr;</a>
+        <a href="https://calendly.com/kloudocean/strategy_meeting" class="btn btn-secondary" data-track="calendly">Book a Strategy Call &rarr;</a>
       </div>
       <div class="hero-locales">
         <span>India</span><span>Australia</span><span>UAE</span><span>USA</span><span>UK</span><span>Canada</span>
@@ -295,7 +296,7 @@
     </div>
     <div class="founders-grid reveal">
       <div class="founder-card">
-        <div class="founder-avatar">RR</div>
+        <div class="founder-avatar"><img src="/assets/people/roop-rajput.jpg" alt="Roop Rajput, Founder — Partnerships &amp; Client Success at KloudOcean" width="72" height="72" loading="lazy"></div>
         <div class="founder-info">
           <h3>Roop Rajput</h3>
           <span class="founder-role">Founder &middot; Partnerships &amp; Client Success</span>
@@ -303,7 +304,7 @@
         </div>
       </div>
       <div class="founder-card">
-        <div class="founder-avatar">PG</div>
+        <div class="founder-avatar"><img src="/assets/people/pradeep-g.jpg" alt="Pradeep G, Technical Principal — Data Engineering &amp; Cloud Governance at KloudOcean" width="72" height="72" loading="lazy"></div>
         <div class="founder-info">
           <h3>Pradeep G</h3>
           <span class="founder-role">Technical Principal &middot; Data Engineering &amp; Cloud Governance</span>
@@ -441,7 +442,9 @@
       <form id="miko-waitlist-form" action="https://formspree.io/f/mqeoozan" method="POST" style="display:flex; gap:0.75rem; flex-wrap:wrap; max-width:460px;">
         <input type="hidden" name="_subject" value="MIKO Waitlist Signup">
         <input type="hidden" name="resource" value="MIKO Waitlist">
+        <input type="hidden" name="_next" value="https://thekloudocean.com/thank-you">
         <input type="email" name="email" placeholder="you@company.com" required style="flex:1; min-width:200px;">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAADwFlBCNQZy9vtWV"></div>
         <button type="submit" class="btn btn-primary">Join the Waitlist</button>
       </form>
     </div>
@@ -578,10 +581,10 @@
       <div class="card case-card">
         <div class="case-meta">
           <svg viewBox="0 0 24 24" fill="none" stroke="#C9A24B" stroke-width="1.6" aria-hidden="true"><rect x="2.8" y="6.5" width="14.5" height="11" rx="1.4"/><path d="M17.3 10l3.9-2.3v8.6L17.3 14"/></svg>
-          Real Estate Media &middot; Melbourne, AU
+          Real Estate Media &middot; Melbourne, AU &middot; Under NDA
         </div>
         <h3>Analytics &amp; GA4 Modernization</h3>
-        <div class="case-sub">SixthVision Media</div>
+        <div class="case-sub">Real estate media &amp; marketing platform</div>
         <div class="case-block"><div class="case-block-label">Challenge</div><p style="font-size:0.9rem;">No unified view of marketing performance across properties; reporting was manual and inconsistent.</p></div>
         <div class="case-block"><div class="case-block-label">Approach</div><p style="font-size:0.9rem;">GA4 implementation with custom event tracking, feeding a live Looker Studio dashboard.</p></div>
         <div class="case-results"><span>&#10003; Unified reporting</span><span>&#10003; Real-time dashboards</span></div>
@@ -673,6 +676,7 @@
     </div>
     <form id="assessment-form" action="https://formspree.io/f/mqeoozan" method="POST" style="max-width:760px;">
       <input type="hidden" name="_subject" value="Assessment Inquiry">
+      <input type="hidden" name="_next" value="https://thekloudocean.com/thank-you">
       <div class="form-grid">
         <div><label for="name">Name</label><input id="name" name="name" required></div>
         <div><label for="email">Work Email</label><input id="email" name="email" type="email" required></div>
@@ -708,6 +712,7 @@
         </div>
         <div class="full"><label for="details">Details</label><textarea id="details" name="details" placeholder="Tell us about your current setup and what's driving the change..."></textarea></div>
       </div>
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAADwFlBCNQZy9vtWV" style="margin-top:var(--space-3);"></div>
       <button type="submit" class="btn btn-primary" style="margin-top:var(--space-3);">Request Free Assessment</button>
     </form>
   </div>
@@ -717,7 +722,7 @@
   <div class="container">
     <h2>Ready to chart the route out?</h2>
     <p>Book a free 30-minute strategy call &mdash; no deck, no pressure, just a straight read on your migration.</p>
-    <a href="https://calendly.com/rajputrupali138/30min" class="btn btn-primary" data-track="calendly">Book This &rarr;</a>
+    <a href="https://calendly.com/kloudocean/strategy_meeting" class="btn btn-primary" data-track="calendly">Book This &rarr;</a>
   </div>
 </section>
 
@@ -746,7 +751,9 @@
         <a href="/services/teradata-to-bigquery-migration">Teradata Migration</a>
         <a href="/services/hdfs-to-bigquery-migration">HDFS / Hive Migration</a>
         <a href="/services/data-governance-consulting">Data Governance</a>
-        <a href="/#pricing">Quick Start Packages</a>
+        <a href="/services/bigquery-cost-optimization">BigQuery Cost Optimization</a>
+        <a href="/services/fractional-data-architect">Fractional Data Architect</a>
+        <a href="/services/analytics-dashboard-modernization">Analytics &amp; Dashboards</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
