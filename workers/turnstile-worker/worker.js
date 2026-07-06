@@ -21,19 +21,20 @@ async function handleRequest(request) {
   const token = form.get ? form.get('cf-turnstile-response') || form.get('turnstile_response') || form.get('turnstileToken') : form.get('turnstile_response');
   const fallback = form.get ? form.get('fallback_captcha') : null;
 
-  const TURNSTILE_SECRET = TURNSTILE_SECRET || null;
-  const FORMSPREE_ENDPOINT = FORMSPREE_ENDPOINT || null;
+  // Access global environment variables/secrets safely without shadowing ReferenceErrors
+  const turnstileSecret = typeof TURNSTILE_SECRET !== 'undefined' ? TURNSTILE_SECRET : null;
+  const formspreeEndpoint = typeof FORMSPREE_ENDPOINT !== 'undefined' ? FORMSPREE_ENDPOINT : null;
 
-  if (!FORMSPREE_ENDPOINT) {
+  if (!formspreeEndpoint) {
     return new Response(JSON.stringify({ ok: false, error: 'Formspree endpoint not configured' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 
   let passed = false;
-  if (token && TURNSTILE_SECRET) {
+  if (token && turnstileSecret) {
     // verify with Cloudflare Turnstile
     const verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
     const body = new URLSearchParams();
-    body.append('secret', TURNSTILE_SECRET);
+    body.append('secret', turnstileSecret);
     body.append('response', token);
 
     try {
@@ -58,7 +59,7 @@ async function handleRequest(request) {
     }
   }
 
-  // Forward to Formspree (or other endpoint) preserving fields and adding verification metadata
+  // Forward to Formspree preserving fields and adding verification metadata
   try {
     const forwardBody = new URLSearchParams();
     // iterate form values
@@ -75,12 +76,20 @@ async function handleRequest(request) {
     forwardBody.append('x_turnstile_verified', passed ? '1' : '0');
     if (isFallback) forwardBody.append('x_fallback_marker', '1');
 
-    const forwardRes = await fetch(FORMSPREE_ENDPOINT, {
+    // Crucial: redirect manual ensures redirect is intercepted and sent to browser correctly
+    const forwardRes = await fetch(formspreeEndpoint, {
       method: 'POST',
-      body: forwardBody
+      body: forwardBody,
+      redirect: 'manual'
     });
 
-    // Relay Formspree response (best-effort)
+    // If Formspree redirects, pass the redirect headers back to the browser
+    if (forwardRes.status === 301 || forwardRes.status === 302 || forwardRes.status === 303) {
+      const redirectLocation = forwardRes.headers.get('location');
+      return Response.redirect(redirectLocation || 'https://thekloudocean.com/thank-you', 302);
+    }
+
+    // Relay Formspree response
     const text = await forwardRes.text();
     return new Response(text, { status: forwardRes.status, headers: { 'Content-Type': forwardRes.headers.get('content-type') || 'text/plain' } });
   } catch (e) {
