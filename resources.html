@@ -47,6 +47,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<!-- Add Search Console verification meta here if you verify the site via HTML. -->
+<!-- Example: <meta name="google-site-verification" content="YOUR_VERIFICATION_TOKEN"> -->
 <!-- Google tag (gtag.js) - consent mode -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G5VW1T18RX"></script>
 <script>
@@ -62,6 +64,7 @@
   gtag('js', new Date());
   gtag('config', 'G-G5VW1T18RX');
 </script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <!-- TEMPLATE_END -->
 </head>
 <body>
@@ -118,22 +121,44 @@
         <div class="estimator-field">
           <label>Data volume <span class="val" id="est-tb-val">50 TB</span></label>
           <input type="range" id="est-tb" min="1" max="1000" step="1" value="50">
+          <div class="slider-limits">
+            <span>1 TB</span>
+            <span>1,000 TB</span>
+          </div>
         </div>
         <div class="estimator-field">
           <label>Number of schemas <span class="val" id="est-schemas-val">10</span></label>
           <input type="range" id="est-schemas" min="1" max="100" step="1" value="10">
+          <div class="slider-limits">
+            <span>1</span>
+            <span>100</span>
+          </div>
         </div>
         <div class="estimator-field">
           <label>BTEQ scripts to convert <span class="val" id="est-bteq-val">200</span></label>
           <input type="range" id="est-bteq" min="0" max="3000" step="10" value="200">
+          <div class="slider-limits">
+            <span>0</span>
+            <span>3,000</span>
+          </div>
         </div>
         <div class="estimator-field">
           <label class="d-block">Target timeline</label>
-          <select id="est-timeline" class="full-width mt-1">
-            <option value="rush">Rush &mdash; under 8 weeks</option>
-            <option value="standard" selected>Standard &mdash; 2&ndash;4 months</option>
-            <option value="flexible">Flexible &mdash; 4&ndash;6+ months</option>
-          </select>
+          <div class="segmented-control mt-1" id="est-timeline-segmented" role="radiogroup" aria-label="Target timeline">
+            <button type="button" class="segment-btn" data-value="rush" role="radio" aria-checked="false">
+              <span class="segment-title">Rush</span>
+              <span class="segment-desc">&lt; 8 weeks</span>
+            </button>
+            <button type="button" class="segment-btn active" data-value="standard" role="radio" aria-checked="true">
+              <span class="segment-title">Standard</span>
+              <span class="segment-desc">2&ndash;4 months</span>
+            </button>
+            <button type="button" class="segment-btn" data-value="flexible" role="radio" aria-checked="false">
+              <span class="segment-title">Flexible</span>
+              <span class="segment-desc">4&ndash;6+ months</span>
+            </button>
+          </div>
+          <input type="hidden" id="est-timeline" name="timeline" value="standard">
         </div>
       </div>
 
@@ -144,32 +169,58 @@
           <div><b>Estimated timeline:</b> <span id="estimate-weeks">8 weeks</span></div>
         </div>
         
-        <div class="estimate-visuals mt-3 mb-3">
-          <div class="estimate-chart">
-            <div class="pie-chart-container">
-              <svg viewBox="0 0 100 100" class="pie-chart">
-                <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="15"></circle>
-                <g class="pie-segments" id="pie-segments"></g>
-                <text x="50" y="50" text-anchor="middle" dy="0.3em" class="pie-text">SPLIT</text>
-              </svg>
-            </div>
-            <div class="chart-legend">
-              <div><span class="dot storage-dot"></span> <span class="storage-label">Storage</span></div>
-              <div><span class="dot schema-dot"></span> <span class="schema-label">Schema</span></div>
-              <div><span class="dot bteq-dot"></span> <span class="bteq-label">BTEQ</span></div>
+        <div class="estimate-visuals-grid mt-3 mb-3">
+          <!-- Cost Distribution Section -->
+          <div class="visuals-card">
+            <div class="visuals-card-title">Cost Distribution</div>
+            <div class="estimate-chart-container">
+              <div class="pie-chart-container">
+                <svg viewBox="0 0 100 100" class="pie-chart">
+                  <circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="12"></circle>
+                  <g class="pie-segments" id="pie-segments"></g>
+                  <text x="50" y="50" text-anchor="middle" dy="0.3em" class="pie-text">Share</text>
+                </svg>
+              </div>
+              <div class="chart-legend-container">
+                <div class="legend-item"><span class="dot storage-dot"></span> <span class="storage-label">Storage:</span> <span class="legend-val" id="storage-pct">--%</span></div>
+                <div class="legend-item"><span class="dot schema-dot"></span> <span class="schema-label">Schema:</span> <span class="legend-val" id="schema-pct">--%</span></div>
+                <div class="legend-item"><span class="dot bteq-dot"></span> <span class="bteq-label">BTEQ:</span> <span class="legend-val" id="bteq-pct">--%</span></div>
+              </div>
             </div>
           </div>
           
-          <div class="estimate-risk-gauge">
-            <div class="gauge-display">
-              <div class="gauge-value" id="estimate-risk-value">--</div>
-              <div class="gauge-label">Risk Level</div>
-            </div>
-            <div class="gauge-bar">
-              <div class="gauge-fill" id="estimate-risk-bar"></div>
+          <!-- Risk Meter Section -->
+          <div class="visuals-card">
+            <div class="visuals-card-title">Complexity Risk</div>
+            <div class="estimate-risk-container">
+              <div class="gauge-semicircle-container">
+                <svg viewBox="0 0 100 60" class="gauge-semicircle">
+                  <!-- Background track -->
+                  <path d="M 15 50 A 35 35 0 0 1 85 50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10" stroke-linecap="round"/>
+                  <!-- Active gradient track -->
+                  <path id="gauge-active-track" d="M 15 50 A 35 35 0 0 1 85 50" fill="none" stroke="url(#gauge-gradient)" stroke-width="10" stroke-linecap="round" stroke-dasharray="110" stroke-dashoffset="110"/>
+                  <!-- Needle -->
+                  <line id="gauge-needle" x1="50" y1="50" x2="50" y2="20" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+                  <!-- Hub -->
+                  <circle cx="50" cy="50" r="5" fill="var(--navy-mid)" stroke="var(--cyan)" stroke-width="2"/>
+                  
+                  <defs>
+                    <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#31D6C8"/>
+                      <stop offset="60%" stop-color="#C9A24B"/>
+                      <stop offset="100%" stop-color="#EF4444"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="gauge-value-display">
+                  <span class="gauge-value" id="estimate-risk-value">--</span>
+                </div>
+              </div>
+              <p class="risk-description-text" id="estimate-risk-desc">Calculating complexity risk...</p>
             </div>
           </div>
         </div>
+
         <p class="estimator-disclaimer is-hidden" id="estimate-floor-note">Estimate floored at our Quick Start package minimum ($599 assessment / $899 full assessment).</p>
         <p class="estimator-disclaimer">Educational estimate only, not a quote. Our paid Migration Assessment scores your platform's actual complexity and returns a fixed price.</p>
 

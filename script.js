@@ -312,10 +312,18 @@ document.addEventListener('DOMContentLoaded', () => {
         bteqPct = Math.max(0, 100 - storagePct - schemaPct);
       }
 
+      // Update Legend Pct
+      const storagePctEl = estimator.querySelector('#storage-pct');
+      const schemaPctEl = estimator.querySelector('#schema-pct');
+      const bteqPctEl = estimator.querySelector('#bteq-pct');
+      if (storagePctEl) storagePctEl.textContent = storagePct + '%';
+      if (schemaPctEl) schemaPctEl.textContent = schemaPct + '%';
+      if (bteqPctEl) bteqPctEl.textContent = bteqPct + '%';
+
       const pieContainer = estimator.querySelector('#pie-segments');
       if (pieContainer) {
         pieContainer.innerHTML = '';
-        const radius = 35;
+        const radius = 38;
         const center = 50;
         const segments = [
           { value: storagePct, color: 'var(--cyan)' },
@@ -347,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
           path.setAttribute('d', pathData);
           path.setAttribute('fill', 'none');
           path.setAttribute('stroke', segment.color);
-          path.setAttribute('stroke-width', '15');
+          path.setAttribute('stroke-width', '12');
           path.setAttribute('stroke-linecap', 'round');
           path.setAttribute('opacity', '0.95');
           pieContainer.appendChild(path);
@@ -361,18 +369,39 @@ document.addEventListener('DOMContentLoaded', () => {
       riskScore = Math.max(0.05, Math.min(0.95, riskScore));
 
       const riskValue = estimator.querySelector('#estimate-risk-value');
-      const riskBar = estimator.querySelector('#estimate-risk-bar');
+      const gaugeActiveTrack = estimator.querySelector('#gauge-active-track');
+      const gaugeNeedle = estimator.querySelector('#gauge-needle');
+      const riskDesc = estimator.querySelector('#estimate-risk-desc');
+
       if (riskValue) {
         riskValue.textContent = risk.charAt(0).toUpperCase() + risk.slice(1);
+        if (risk === 'high') {
+          riskValue.style.color = '#EF4444';
+        } else if (risk === 'medium') {
+          riskValue.style.color = '#C9A24B';
+        } else {
+          riskValue.style.color = '#31D6C8';
+        }
       }
-      if (riskBar) {
-        riskBar.style.width = `${Math.round(riskScore * 100)}%`;
-        riskBar.style.background =
-          risk === 'high'
-            ? 'linear-gradient(90deg, #F97316 0%, #EF4444 100%)'
-            : risk === 'medium'
-            ? 'linear-gradient(90deg, #31D6C8 0%, #C9A24B 100%)'
-            : 'linear-gradient(90deg, #31D6C8 0%, #6EE7B7 100%)';
+
+      if (gaugeActiveTrack) {
+        const offset = 110 - (riskScore * 110);
+        gaugeActiveTrack.setAttribute('stroke-dashoffset', offset);
+      }
+      
+      if (gaugeNeedle) {
+        const angle = -90 + (riskScore * 180);
+        gaugeNeedle.setAttribute('transform', `rotate(${angle} 50 50)`);
+      }
+      
+      if (riskDesc) {
+        if (risk === 'high') {
+          riskDesc.textContent = 'High complexity requires significant governance, potential architecture changes, and custom scripting.';
+        } else if (risk === 'medium') {
+          riskDesc.textContent = 'Moderate complexity. Standard migration patterns apply, but careful planning is needed for BTEQ conversions.';
+        } else {
+          riskDesc.textContent = 'Low risk profile. Straightforward lift-and-shift with automated schema conversions.';
+        }
       }
 
       // Keep hidden fields in sync so the optional "email me this" form
@@ -387,9 +416,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const timelineSegmentBtns = document.querySelectorAll('.segment-btn');
+    timelineSegmentBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        timelineSegmentBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-checked', 'true');
+        timelineInput.value = btn.dataset.value;
+        calculate();
+      });
+    });
+
     [tbInput, schemaInput, bteqInput].forEach(el =>
       el.addEventListener('input', calculate));
-    timelineInput.addEventListener('change', calculate);
+    if (timelineInput && timelineInput.tagName === 'SELECT') {
+      timelineInput.addEventListener('change', calculate);
+    }
     calculate();
   }
 
