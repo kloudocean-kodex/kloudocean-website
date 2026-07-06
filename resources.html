@@ -84,7 +84,7 @@
 <header class="page-hero">
   <div class="container">
     <div class="eyebrow">Free, Before You Hire Us</div>
-    <h1 style="font-size:clamp(2rem,4vw,3rem); max-width:820px;">Everything here is free &mdash; whether or not you ever become a client.</h1>
+    <h1 class="page-hero-title page-hero-title--large">Everything here is free &mdash; whether or not you ever become a client.</h1>
     <p style="max-width:600px; margin-top:var(--space-2);">The estimator and checklist need nothing from you. The rest take thirty seconds to unlock with an email.</p>
   </div>
 </header>
@@ -133,7 +133,7 @@
         <p class="estimator-disclaimer">Educational estimate only, not a quote. Our paid Migration Assessment scores your platform's actual complexity and returns a fixed price.</p>
 
         <div class="estimator-email">
-          <form class="gate-form" data-resource="cost-estimate" action="https://formspree.io/f/mqeoozan" method="POST">
+          <form class="gate-form" data-resource="cost-estimate" action="/api/submit" method="POST">
             <input type="hidden" name="_subject" value="Cost Estimate Request">
             <input type="hidden" name="resource" value="Cost Estimator Result">
             <input type="hidden" name="_next" value="https://calendly.com/kloudocean/strategy_meeting">
@@ -180,7 +180,7 @@
         <span class="tool-badge gated">Email to Unlock</span>
         <h4>TD &rarr; BigQuery SQL Cheat Sheet</h4>
         <p>25 real syntax patterns &mdash; what breaks, what ports cleanly, and the failure mode each one causes.</p>
-        <form class="gate-form" data-resource="sql-cheatsheet" action="https://formspree.io/f/mqeoozan" method="POST">
+        <form class="gate-form" data-resource="sql-cheatsheet" action="/api/submit" method="POST">
           <input type="hidden" name="_subject" value="SQL Cheat Sheet Download">
           <input type="hidden" name="resource" value="SQL Cheat Sheet">
           <input type="hidden" name="_next" value="https://thekloudocean.com/downloads/kloudocean-teradata-bigquery-sql-cheatsheet.pdf">
@@ -199,7 +199,7 @@
         <span class="tool-badge gated">Email to Unlock</span>
         <h4>Teradata Inventory Query Pack</h4>
         <p>13 ready-to-run DBC queries for a full system inventory &mdash; the exact pack we run in hour one of an assessment.</p>
-        <form class="gate-form" data-resource="query-pack" action="https://formspree.io/f/mqeoozan" method="POST">
+        <form class="gate-form" data-resource="query-pack" action="/api/submit" method="POST">
           <input type="hidden" name="_subject" value="Query Pack Download">
           <input type="hidden" name="resource" value="Teradata Query Pack">
           <input type="hidden" name="_next" value="https://thekloudocean.com/downloads/kloudocean-teradata-inventory-query-pack.sql">
@@ -218,7 +218,7 @@
         <span class="tool-badge gated">Email to Unlock</span>
         <h4>Data Governance Template Pack</h4>
         <p>Catalog, lineage tracker, access control matrix, and data quality rule sheet &mdash; the structure we scope governance work from.</p>
-        <form class="gate-form" data-resource="governance-pack" action="https://formspree.io/f/mqeoozan" method="POST">
+        <form class="gate-form" data-resource="governance-pack" action="/api/submit" method="POST">
           <input type="hidden" name="_subject" value="Governance Template Pack Download">
           <input type="hidden" name="resource" value="Governance Template Pack">
           <input type="hidden" name="_next" value="https://thekloudocean.com/downloads/kloudocean-data-governance-template-pack.xlsx">
